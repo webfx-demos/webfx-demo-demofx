@@ -79,8 +79,8 @@
     <inherits name="org.gwtproject.nio.GwtNioSupport"/>
     <!--=========================< webfx-demo-demofx-application >==========================-->
     <source path="dev/webfx/demo/demofx"/>
-    <!--==============================< webfx-extras-flexbox >==============================-->
-    <source path="dev/webfx/extras/flexbox"/>
+    <resource path="dev/webfx/demo/demofx"/>
+    <public includes="dev/webfx/demo/demofx/" path=""/>
     <!--============================< webfx-extras-imagestore >=============================-->
     <source path="dev/webfx/extras/imagestore"/>
     <!--=================================< webfx-kit-gwt >==================================-->

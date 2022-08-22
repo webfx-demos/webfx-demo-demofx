@@ -3,12 +3,17 @@
 module webfx.demo.demofx.application {
 
     // Direct dependencies modules
+    requires java.base;
     requires javafx.graphics;
-    requires webfx.extras.flexbox;
     requires webfx.lib.demofx;
+    requires webfx.platform.resource;
+    requires webfx.platform.util;
 
     // Exported packages
     exports dev.webfx.demo.demofx;
+
+    // Resources packages
+    opens dev.webfx.demo.demofx;
 
     // Provided services
     provides javafx.application.Application with dev.webfx.demo.demofx.DemoFXApplication;
