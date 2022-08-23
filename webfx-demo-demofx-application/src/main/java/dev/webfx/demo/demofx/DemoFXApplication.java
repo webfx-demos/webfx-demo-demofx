@@ -3,7 +3,7 @@ package dev.webfx.demo.demofx;
 import com.chrisnewland.demofx.DemoConfig;
 import com.chrisnewland.demofx.DemoFX;
 import com.chrisnewland.demofx.effect.IEffect;
-import com.chrisnewland.demofx.effect.addon.AddOnFadeInOutEffect;
+import com.chrisnewland.demofx.effect.addon.AddOnFadeInEffect;
 import com.chrisnewland.demofx.effect.addon.AddOnFadeOutEffect;
 import com.chrisnewland.demofx.effect.effectfactory.IEffectFactory;
 import com.chrisnewland.demofx.effect.fake3d.StarfieldSprite;
@@ -44,8 +44,8 @@ public class DemoFXApplication extends Application {
                 playDemo.stopDemo();
                 DemoFX demo = new DemoFX(newDemoConfig("DemoFX3.mp3"), (IEffectFactory) demoConfig -> dev.webfx.platform.util.collection.Collections.listOf(
                         scheduleEffect(new AddOnFadeOutEffect(new StarfieldSprite(demoConfig)), 0, 24000),
-                        scheduleEffect(new AddOnFadeInOutEffect(new FractalRings(demoConfig)), 16000, 40000),
-                        scheduleEffect(new AddOnFadeOutEffect(new Mandelbrot(demoConfig)), 40000, -1),
+                        scheduleEffect(new AddOnFadeInEffect(new FractalRings(demoConfig)), 16000, 40000),
+                        scheduleEffect(new Mandelbrot(demoConfig), 40000, 64000),
                         scheduleEffect(new Sierpinski(demoConfig), 32500, 40000),
                         scheduleEffect(new Checkerboard(demoConfig), 64000, -1),
                         scheduleEffect(new Chord(demoConfig, Color.ORANGE), 48000, -1)
