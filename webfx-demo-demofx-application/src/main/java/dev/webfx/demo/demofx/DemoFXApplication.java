@@ -3,18 +3,21 @@ package dev.webfx.demo.demofx;
 import com.chrisnewland.demofx.DemoConfig;
 import com.chrisnewland.demofx.DemoFX;
 import com.chrisnewland.demofx.effect.IEffect;
-import com.chrisnewland.demofx.effect.addon.AddOnFadeInEffect;
+import com.chrisnewland.demofx.effect.addon.AddOnFadeInOutEffect;
 import com.chrisnewland.demofx.effect.addon.AddOnFadeOutEffect;
 import com.chrisnewland.demofx.effect.effectfactory.IEffectFactory;
 import com.chrisnewland.demofx.effect.fake3d.StarfieldSprite;
 import com.chrisnewland.demofx.effect.fractal.FractalRings;
+import com.chrisnewland.demofx.effect.fractal.Mandelbrot;
 import com.chrisnewland.demofx.effect.fractal.Sierpinski;
+import com.chrisnewland.demofx.effect.shape.Chord;
 import com.chrisnewland.demofx.effect.text.TextWaveSprite;
 import com.chrisnewland.demofx.effect.text.WordSearch;
 import dev.webfx.platform.resource.Resource;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class DemoFXApplication extends Application {
@@ -40,9 +43,11 @@ public class DemoFXApplication extends Application {
                 playDemo.stopDemo();
                 DemoFX demo = new DemoFX(newDemoConfig("DemoFX3.mp3"), (IEffectFactory) demoConfig -> dev.webfx.platform.util.collection.Collections.listOf(
                         scheduleEffect(new AddOnFadeOutEffect(new StarfieldSprite(demoConfig)), 0, 25000),
-                        scheduleEffect(new AddOnFadeInEffect(new FractalRings(demoConfig)), 16000, -1),
-                        scheduleEffect(new Sierpinski(demoConfig), 32500, -1)
-                ));
+                        scheduleEffect(new AddOnFadeInOutEffect(new FractalRings(demoConfig)), 16000, 45000),
+                        scheduleEffect(new AddOnFadeInOutEffect(new Mandelbrot(demoConfig)), 40000, -1),
+                        scheduleEffect(new AddOnFadeOutEffect(new Sierpinski(demoConfig)), 32500, 45000),
+                        scheduleEffect(new Chord(demoConfig, Color.ORANGE), 40500, -1)
+                        ));
                 root.getChildren().setAll(demo.getPane());
                 demo.runDemo();
                 started = true;
