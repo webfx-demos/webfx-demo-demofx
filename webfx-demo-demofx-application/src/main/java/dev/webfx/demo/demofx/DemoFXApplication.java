@@ -8,6 +8,7 @@ import com.chrisnewland.demofx.effect.addon.AddOnFadeOutEffect;
 import com.chrisnewland.demofx.effect.effectfactory.IEffectFactory;
 import com.chrisnewland.demofx.effect.fake3d.StarfieldSprite;
 import com.chrisnewland.demofx.effect.fractal.FractalRings;
+import com.chrisnewland.demofx.effect.fractal.Sierpinski;
 import com.chrisnewland.demofx.effect.text.TextWaveSprite;
 import com.chrisnewland.demofx.effect.text.WordSearch;
 import dev.webfx.platform.resource.Resource;
@@ -38,8 +39,9 @@ public class DemoFXApplication extends Application {
             if (!started) {
                 playDemo.stopDemo();
                 DemoFX demo = new DemoFX(newDemoConfig("DemoFX3.mp3"), (IEffectFactory) demoConfig -> dev.webfx.platform.util.collection.Collections.listOf(
-                        scheduleEffect(new AddOnFadeOutEffect(new StarfieldSprite(demoConfig)), 0, 26000),
-                        scheduleEffect(new AddOnFadeInEffect(new FractalRings(demoConfig)), 16000, -1)
+                        scheduleEffect(new AddOnFadeOutEffect(new StarfieldSprite(demoConfig)), 0, 25000),
+                        scheduleEffect(new AddOnFadeInEffect(new FractalRings(demoConfig)), 16000, -1),
+                        scheduleEffect(new Sierpinski(demoConfig), 32500, -1)
                 ));
                 root.getChildren().setAll(demo.getPane());
                 demo.runDemo();
