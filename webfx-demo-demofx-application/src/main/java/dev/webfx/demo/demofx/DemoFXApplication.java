@@ -5,6 +5,7 @@ import com.chrisnewland.demofx.DemoFX;
 import com.chrisnewland.demofx.effect.IEffect;
 import com.chrisnewland.demofx.effect.effectfactory.IEffectFactory;
 import com.chrisnewland.demofx.effect.fake3d.StarfieldSprite;
+import com.chrisnewland.demofx.effect.fractal.FractalRings;
 import com.chrisnewland.demofx.effect.text.TextWaveSprite;
 import com.chrisnewland.demofx.effect.text.WordSearch;
 import dev.webfx.platform.resource.Resource;
@@ -16,8 +17,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
-import java.util.function.Function;
 
 public class DemoFXApplication extends Application {
 
@@ -33,9 +32,9 @@ public class DemoFXApplication extends Application {
         stage.setScene(scene);
         stage.show();
         DemoConfig config = new DemoConfig(scene.getWidth(), scene.getHeight());
-        demoFX = new DemoFX(config, (IEffectFactory) config1 -> dev.webfx.platform.util.collection.Collections.listOf(
-                new WordSearch(config1, "Animation using DemoFX\n\nA JavaFX Canvas library\n\nby Chris Newland"),
-                new TextWaveSprite(config1, new String[] {"Click to start"}, config1.getHeight() - 200, 1, 5, true)
+        demoFX = new DemoFX(config, (IEffectFactory) conf -> dev.webfx.platform.util.collection.Collections.listOf(
+                new WordSearch(conf, "Animation using DemoFX\n\nA JavaFX Canvas library\n\nby Chris Newland"),
+                new TextWaveSprite(conf, new String[] {"Click to start"}, conf.getHeight() - 200, 1, 5, true)
         ));
 
         root.getChildren().setAll(demoFX.getPane());
@@ -44,12 +43,23 @@ public class DemoFXApplication extends Application {
             if (!started) {
                 demoFX.stopDemo();
                 config.setAudioFilename(Resource.toUrl("DemoFX3.mp3", DemoFXApplication.class));
-                demoFX = new DemoFX(config, (Function<DemoConfig, IEffect>) StarfieldSprite::new);
+                demoFX = new DemoFX(config, (IEffectFactory) conf -> dev.webfx.platform.util.collection.Collections.listOf(
+                        new StarfieldSprite(conf),
+                        schedule(new FractalRings(conf), 16_000, -1)
+                ));
                 root.getChildren().setAll(demoFX.getPane());
                 demoFX.runDemo();
                 started = true;
             }
         });
+    }
+
+    private IEffect schedule(IEffect effect, long start, long stop) {
+        if (start > 0)
+            effect.setStartOffsetMillis(start);
+        if (stop > 0)
+            effect.setStopOffsetMillis(stop);
+        return effect;
     }
 
     private static <R extends Region> R setBackgroundColor(Color color, R region) {
