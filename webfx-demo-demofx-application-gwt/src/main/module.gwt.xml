@@ -71,6 +71,10 @@
     <source path="javafx/scene/media"/>
     <!--=================================< elemental2-dom >=================================-->
     <inherits name="elemental2.dom.Dom"/>
+    <!--================================< elemental2-media >================================-->
+    <source path="elemental2/media"/>
+    <!--===============================< elemental2-promise >===============================-->
+    <source path="elemental2/promise"/>
     <!--=================================< elemental2-svg >=================================-->
     <inherits name="elemental2.svg.Svg"/>
     <!--====================================< gwt-user >====================================-->
@@ -117,6 +121,7 @@
     <!--================================< webfx-lib-demofx >================================-->
     <source path="com/chrisnewland/demofx"/>
     <source path="com/chrisnewland/demofx/effect"/>
+    <source path="com/chrisnewland/demofx/effect/addon"/>
     <source path="com/chrisnewland/demofx/effect/effectfactory"/>
     <source path="com/chrisnewland/demofx/effect/fake3d"/>
     <source path="com/chrisnewland/demofx/effect/fractal"/>
