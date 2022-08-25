@@ -27,7 +27,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class DemoFXApplication extends Application {
-
     private final StackPane root = new StackPane();
     private final Scene scene = new Scene(root, 1600, 1200);
     private DemoFX introDemo, actualDemo;
@@ -36,14 +35,41 @@ public class DemoFXApplication extends Application {
 
     @Override
     public void start(Stage stage) {
+        introDemo = newIntroDemo();
+        actualDemo = newActualDemo();
+        root.getChildren().setAll(introDemo.getPane());
+        root.setOnMousePressed(e -> { // Using setOnMousePressed() because sound doesn't start on iPad if using setOnMouseClicked()
+            if (!started)
+                introDemo.stopDemo();
+            else {
+                actualDemo.stopDemo();
+                actualDemo = newActualDemo();
+            }
+            root.getChildren().setAll(actualDemo.getPane());
+            actualDemo.runDemo();
+            started = true;
+        });
         stage.setTitle("DemoFX");
         stage.setScene(scene);
         stage.show();
-        introDemo = new DemoFX(newDemoConfig(null), (IEffectFactory) demoConfig -> dev.webfx.platform.util.collection.Collections.listOf(
+        introDemo.runDemo();
+    }
+
+    private DemoConfig newDemoConfig(String audioResource) {
+        DemoConfig demoConfig = new DemoConfig(scene.getWidth(), scene.getHeight());
+        demoConfig.setAudioFilename(Resource.toUrl(audioResource, DemoFXApplication.class));
+        return demoConfig;
+    }
+
+    private DemoFX newIntroDemo() {
+        return new DemoFX(newDemoConfig(null), (IEffectFactory) demoConfig -> dev.webfx.platform.util.collection.Collections.listOf(
                 new WordSearch(demoConfig, "Animation using DemoFX\n\nA JavaFX Canvas library\n\nby Chris Newland"),
                 new TextWaveSprite(demoConfig, new String[] {"Click to play"}, demoConfig.getHeight() - 200, 1, 5, true)
         ));
-        actualDemo = new DemoFX(newDemoConfig("DemoFX3.mp3"), (IEffectFactory) demoConfig -> dev.webfx.platform.util.collection.Collections.listOf(
+    }
+
+    private DemoFX newActualDemo() {
+        return new DemoFX(newDemoConfig("DemoFX3.mp3"), (IEffectFactory) demoConfig -> dev.webfx.platform.util.collection.Collections.listOf(
                 scheduleEffect(new StarfieldSprite(demoConfig), 0, t1 = 16200),
                 scheduleEffect(new RotateAddOnEffect(new FractalRings(demoConfig), 24300, 1, t3 = 32000, -1), t1, t2 = 40000),
                 scheduleEffect(new Sierpinski(demoConfig), t3, t2),
@@ -60,23 +86,6 @@ public class DemoFXApplication extends Application {
                 scheduleEffect(new WordSearch(demoConfig, "Amazing work\n\nThank you Chris Newland\n\nalias @chriswhocodes"), t8, t9 = 265000),
                 scheduleEffect(new SnowfieldSprite(demoConfig), t8 + 10000, t9)
         ));
-
-        root.getChildren().setAll(introDemo.getPane());
-        introDemo.runDemo();
-        root.setOnMousePressed(e -> {
-            if (!started) {
-                introDemo.stopDemo();
-                root.getChildren().setAll(actualDemo.getPane());
-                actualDemo.runDemo();
-                //started = true;
-            }
-        });
-    }
-
-    private DemoConfig newDemoConfig(String audioResource) {
-        DemoConfig demoConfig = new DemoConfig(scene.getWidth(), scene.getHeight());
-        demoConfig.setAudioFilename(Resource.toUrl(audioResource, DemoFXApplication.class));
-        return demoConfig;
     }
 
     private IEffect scheduleEffect(IEffect effect, long start, long stop) {
