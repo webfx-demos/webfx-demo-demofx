@@ -10,10 +10,10 @@ import com.chrisnewland.demofx.effect.fake3d.StarfieldSprite;
 import com.chrisnewland.demofx.effect.fractal.FractalRings;
 import com.chrisnewland.demofx.effect.fractal.Mandelbrot;
 import com.chrisnewland.demofx.effect.fractal.Sierpinski;
-import com.chrisnewland.demofx.effect.shape.Checkerboard;
 import com.chrisnewland.demofx.effect.shape.Chord;
 import com.chrisnewland.demofx.effect.shape.Glowboard;
 import com.chrisnewland.demofx.effect.shape.SineLines;
+import com.chrisnewland.demofx.effect.spectral.Equaliser2D;
 import com.chrisnewland.demofx.effect.sprite.Spin;
 import com.chrisnewland.demofx.effect.sprite.Tiles;
 import com.chrisnewland.demofx.effect.text.TextRing;
@@ -72,13 +72,14 @@ public class DemoFXApplication extends Application {
         return new DemoFX(newDemoConfig("DemoFX3.mp3"), (IEffectFactory) demoConfig -> dev.webfx.platform.util.collection.Collections.listOf(
                 scheduleEffect(new StarfieldSprite(demoConfig), 0, t1 = 15820),
                 scheduleEffect(new RotateAddOnEffect(new FractalRings(demoConfig), 23920, -1, t2 = 32000, 1), t1, t3 = 39900),
-                scheduleEffect(new Mandelbrot(demoConfig), t3, t5 = 64000),
+                scheduleEffect(new Mandelbrot(demoConfig), t3, t6 = 80000),
                 scheduleEffect(new Sierpinski(demoConfig), t2, t4 = 47850),
                 scheduleEffect(new TextWaveSprite(demoConfig, new String[] {"Realtime Mandelbrot computation"}, demoConfig.getHeight() - 200, 0.8, 10), t4 + 2000, t5),
-                scheduleEffect(new Checkerboard(demoConfig), t5, t6 = 70000),
-                scheduleEffect(new Chord(demoConfig, Color.ORANGE), t4, t6),
-                scheduleEffect(new Glowboard(demoConfig), t6 = 70000, t7 = 96000),
+                //scheduleEffect(new Checkerboard(demoConfig), t5, t6 = 80000),
+                scheduleEffect(new Chord(demoConfig, Color.ORANGE), t4, t5 = 64000),
+                scheduleEffect(new Glowboard(demoConfig), t6, t7 = 96000),
                 scheduleEffect(new SineLines(demoConfig), t6, t7),
+                scheduleEffect(new Equaliser2D(demoConfig), t5, t7),
                 scheduleEffect(new Tiles(demoConfig), t7, t8 = 160200),
                 scheduleEffect(new Spin(demoConfig), t8, t9 = 192000),
                 scheduleEffect(new TextRing(demoConfig, new TextRing.RingData[] {

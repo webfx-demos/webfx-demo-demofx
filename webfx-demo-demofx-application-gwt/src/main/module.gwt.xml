@@ -69,6 +69,8 @@
     <source path="dev/webfx/kit/mapper/peers/javafxmedia"/>
     <source path="dev/webfx/kit/mapper/peers/javafxmedia/spi"/>
     <source path="javafx/scene/media"/>
+    <!--================================< elemental2-core >=================================-->
+    <inherits name="elemental2.core.Core"/>
     <!--=================================< elemental2-dom >=================================-->
     <inherits name="elemental2.dom.Dom"/>
     <!--================================< elemental2-media >================================-->
