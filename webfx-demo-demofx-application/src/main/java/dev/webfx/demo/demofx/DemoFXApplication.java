@@ -63,7 +63,7 @@ public class DemoFXApplication extends Application {
 
         root.getChildren().setAll(introDemo.getPane());
         introDemo.runDemo();
-        root.setOnMouseClicked(e -> {
+        root.setOnMousePressed(e -> {
             if (!started) {
                 introDemo.stopDemo();
                 root.getChildren().setAll(actualDemo.getPane());
