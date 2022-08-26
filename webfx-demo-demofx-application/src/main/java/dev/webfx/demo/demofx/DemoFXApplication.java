@@ -3,6 +3,7 @@ package dev.webfx.demo.demofx;
 import com.chrisnewland.demofx.DemoConfig;
 import com.chrisnewland.demofx.DemoFX;
 import com.chrisnewland.demofx.effect.IEffect;
+import com.chrisnewland.demofx.effect.addon.FadeOutAddOnEffect;
 import com.chrisnewland.demofx.effect.addon.RotateAddOnEffect;
 import com.chrisnewland.demofx.effect.effectfactory.IEffectFactory;
 import com.chrisnewland.demofx.effect.fake3d.SnowfieldSprite;
@@ -16,6 +17,7 @@ import com.chrisnewland.demofx.effect.shape.SineLines;
 import com.chrisnewland.demofx.effect.spectral.Equaliser2D;
 import com.chrisnewland.demofx.effect.sprite.Spin;
 import com.chrisnewland.demofx.effect.sprite.Tiles;
+import com.chrisnewland.demofx.effect.text.TextFlash;
 import com.chrisnewland.demofx.effect.text.TextRing;
 import com.chrisnewland.demofx.effect.text.TextWaveSprite;
 import com.chrisnewland.demofx.effect.text.WordSearch;
@@ -84,8 +86,9 @@ public class DemoFXApplication extends Application {
                 scheduleEffect(new Spin(demoConfig), t8, t9 = 192000),
                 scheduleEffect(new TextRing(demoConfig, new TextRing.RingData[] {
                         new TextRing.RingData("Coded    in    Java    and    JavaFX", 300, 0.15, 1, 3, 2)}), t8 + 5000, t9),
-                scheduleEffect(new WordSearch(demoConfig, "Amazing work\n\nThank you Chris Newland\n\nalias @chriswhocodes"), t9, t10 = 265000),
-                scheduleEffect(new SnowfieldSprite(demoConfig), t9 + 10000, t10)
+                scheduleEffect(new FadeOutAddOnEffect(new WordSearch(demoConfig, "Amazing work\n\nThank you Chris Newland\n\nalias @chriswhocodes"), 2500), t9, t10 = 264000 - 2500),
+                scheduleEffect(new FadeOutAddOnEffect(new SnowfieldSprite(demoConfig), 2500), t9 + 8000, t10),
+                scheduleEffect(new TextFlash(demoConfig, "Thank you for watching", false, 150, 200, 150), t10, t10 + 2500)
         ));
     }
 
