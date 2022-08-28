@@ -14,7 +14,7 @@ import com.chrisnewland.demofx.effect.fractal.Sierpinski;
 import com.chrisnewland.demofx.effect.shape.Chord;
 import com.chrisnewland.demofx.effect.shape.Glowboard;
 import com.chrisnewland.demofx.effect.shape.SineLines;
-import com.chrisnewland.demofx.effect.spectral.Equaliser2D;
+import com.chrisnewland.demofx.effect.spectral.Equaliser;
 import com.chrisnewland.demofx.effect.sprite.Spin;
 import com.chrisnewland.demofx.effect.sprite.Tiles;
 import com.chrisnewland.demofx.effect.text.TextFlash;
@@ -81,7 +81,7 @@ public class DemoFXApplication extends Application {
                 scheduleEffect(new Chord(demoConfig, Color.ORANGE), t4, t5 = 64000),
                 scheduleEffect(new Glowboard(demoConfig), t6, t7 = 96000),
                 scheduleEffect(new SineLines(demoConfig), t6, t7),
-                scheduleEffect(new Equaliser2D(demoConfig), t5, t7),
+                scheduleEffect(new Equaliser(demoConfig), t5, t7),
                 scheduleEffect(new Tiles(demoConfig), t7, t8 = 160200),
                 scheduleEffect(new Spin(demoConfig), t8, t9 = 192000),
                 scheduleEffect(new TextRing(demoConfig, new TextRing.RingData[] {
