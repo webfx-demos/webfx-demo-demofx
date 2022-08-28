@@ -12,8 +12,8 @@ import com.chrisnewland.demofx.effect.fractal.FractalRings;
 import com.chrisnewland.demofx.effect.fractal.Mandelbrot;
 import com.chrisnewland.demofx.effect.fractal.Sierpinski;
 import com.chrisnewland.demofx.effect.shape.Chord;
+import com.chrisnewland.demofx.effect.shape.Concentric;
 import com.chrisnewland.demofx.effect.shape.Glowboard;
-import com.chrisnewland.demofx.effect.shape.SineLines;
 import com.chrisnewland.demofx.effect.spectral.Equaliser;
 import com.chrisnewland.demofx.effect.sprite.Spin;
 import com.chrisnewland.demofx.effect.sprite.Tiles;
@@ -21,16 +21,18 @@ import com.chrisnewland.demofx.effect.text.TextFlash;
 import com.chrisnewland.demofx.effect.text.TextRing;
 import com.chrisnewland.demofx.effect.text.TextWaveSprite;
 import com.chrisnewland.demofx.effect.text.WordSearch;
+import dev.webfx.extras.imagestore.ImageStore;
 import dev.webfx.platform.resource.Resource;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class DemoFXApplication extends Application {
     private final StackPane root = new StackPane();
-    private final Scene scene = new Scene(root, 1600, 1200);
+    private final Scene scene = new Scene(root, 800, 600);
     private DemoFX introDemo, actualDemo;
     private boolean started;
     long t1, t2, t3, t4, t5, t6, t7, t8, t9, t10;
@@ -76,12 +78,12 @@ public class DemoFXApplication extends Application {
                 scheduleEffect(new RotateAddOnEffect(new FractalRings(demoConfig), 23920, -1, t2 = 32000, 1), t1, t3 = 39900),
                 scheduleEffect(new Mandelbrot(demoConfig), t3, t6 = 80000),
                 scheduleEffect(new Sierpinski(demoConfig), t2, t4 = 47850),
-                scheduleEffect(new TextWaveSprite(demoConfig, new String[] {"Realtime Mandelbrot computation"}, demoConfig.getHeight() - 200, 0.8, 10), t4 + 2000, t5),
-                //scheduleEffect(new Checkerboard(demoConfig), t5, t6 = 80000),
                 scheduleEffect(new Chord(demoConfig, Color.ORANGE), t4, t5 = 64000),
+                scheduleEffect(new TextWaveSprite(demoConfig, new String[] {"Realtime Mandelbrot computation"}, demoConfig.getHeight() - 200, 0.8, 10), t4 + 2000, t5),
+                scheduleEffect(new Concentric(demoConfig, loadImage("gem-red.png"), loadImage("gem-green.png"), loadImage("gem-blue.png"), loadImage("gem-yellow.png")), t5, t6 = 80000),
+                //scheduleEffect(new Falling(demoConfig, "quaver2.png"), t5, t6),
                 scheduleEffect(new Glowboard(demoConfig), t6, t7 = 96000),
-                scheduleEffect(new SineLines(demoConfig), t6, t7),
-                scheduleEffect(new Equaliser(demoConfig), t5, t7),
+                scheduleEffect(new Equaliser(demoConfig), t6, t7),
                 scheduleEffect(new Tiles(demoConfig), t7, t8 = 160200),
                 scheduleEffect(new Spin(demoConfig), t8, t9 = 192000),
                 scheduleEffect(new TextRing(demoConfig, new TextRing.RingData[] {
@@ -98,5 +100,9 @@ public class DemoFXApplication extends Application {
         if (stop > 0)
             effect.setStopOffsetMillis(stop);
         return effect;
+    }
+
+    private Image loadImage(String name) {
+        return ImageStore.getOrCreateImage("dev/webfx/demo/demofx/" + name);
     }
 }

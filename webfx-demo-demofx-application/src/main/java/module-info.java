@@ -5,6 +5,7 @@ module webfx.demo.demofx.application {
     // Direct dependencies modules
     requires javafx.graphics;
     requires javafx.media;
+    requires webfx.extras.imagestore;
     requires webfx.lib.demofx;
     requires webfx.platform.resource;
     requires webfx.platform.util;

@@ -125,6 +125,7 @@
     <source path="com/chrisnewland/demofx/effect/effectfactory"/>
     <source path="com/chrisnewland/demofx/effect/fake3d"/>
     <source path="com/chrisnewland/demofx/effect/fractal"/>
+    <source path="com/chrisnewland/demofx/effect/pixel"/>
     <source path="com/chrisnewland/demofx/effect/shape"/>
     <source path="com/chrisnewland/demofx/effect/spectral"/>
     <source path="com/chrisnewland/demofx/effect/sprite"/>
