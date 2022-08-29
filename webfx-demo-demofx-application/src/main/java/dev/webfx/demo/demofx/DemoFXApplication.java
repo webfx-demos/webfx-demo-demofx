@@ -11,12 +11,9 @@ import com.chrisnewland.demofx.effect.fake3d.StarfieldSprite;
 import com.chrisnewland.demofx.effect.fractal.FractalRings;
 import com.chrisnewland.demofx.effect.fractal.Mandelbrot;
 import com.chrisnewland.demofx.effect.fractal.Sierpinski;
-import com.chrisnewland.demofx.effect.shape.Chord;
-import com.chrisnewland.demofx.effect.shape.Concentric;
-import com.chrisnewland.demofx.effect.shape.Glowboard;
+import com.chrisnewland.demofx.effect.shape.*;
 import com.chrisnewland.demofx.effect.spectral.Equaliser;
-import com.chrisnewland.demofx.effect.sprite.Spin;
-import com.chrisnewland.demofx.effect.sprite.Tiles;
+import com.chrisnewland.demofx.effect.sprite.*;
 import com.chrisnewland.demofx.effect.text.TextFlash;
 import com.chrisnewland.demofx.effect.text.TextRing;
 import com.chrisnewland.demofx.effect.text.TextWaveSprite;
@@ -35,7 +32,7 @@ public class DemoFXApplication extends Application {
     private final Scene scene = new Scene(root, 800, 600);
     private DemoFX introDemo, actualDemo;
     private boolean started;
-    long t1, t2, t3, t4, t5, t6, t7, t8, t9, t10;
+    long t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12;
 
     @Override
     public void start(Stage stage) {
@@ -69,28 +66,35 @@ public class DemoFXApplication extends Application {
         return new DemoFX(newDemoConfig(null), (IEffectFactory) demoConfig -> dev.webfx.platform.util.collection.Collections.listOf(
                 new WordSearch(demoConfig, "Animation using DemoFX\n\nA JavaFX Canvas library\n\nby Chris Newland"),
                 new TextWaveSprite(demoConfig, new String[] {"Click to play"}, demoConfig.getHeight() - 200, 1, 5, true)
-        ));
+                //new Checkerboard(demoConfig),
+                //new Rings(demoConfig)
+                ));
     }
 
     private DemoFX newActualDemo() {
         return new DemoFX(newDemoConfig("DemoFX3.mp3"), (IEffectFactory) demoConfig -> dev.webfx.platform.util.collection.Collections.listOf(
                 scheduleEffect(new StarfieldSprite(demoConfig), 0, t1 = 15820),
                 scheduleEffect(new RotateAddOnEffect(new FractalRings(demoConfig), 23920, -1, t2 = 32000, 1), t1, t3 = 39900),
-                scheduleEffect(new Mandelbrot(demoConfig), t3, t6 = 80000),
+                scheduleEffect(new Mandelbrot(demoConfig), t3, t6 = 76000),
                 scheduleEffect(new Sierpinski(demoConfig), t2, t4 = 47850),
                 scheduleEffect(new Chord(demoConfig, Color.ORANGE), t4, t5 = 64000),
                 scheduleEffect(new TextWaveSprite(demoConfig, new String[] {"Realtime Mandelbrot computation"}, demoConfig.getHeight() - 200, 0.8, 10), t4 + 2000, t5),
-                scheduleEffect(new Concentric(demoConfig, loadImage("gem-red.png"), loadImage("gem-green.png"), loadImage("gem-blue.png"), loadImage("gem-yellow.png")), t5, t6 = 80000),
-                //scheduleEffect(new Falling(demoConfig, "quaver2.png"), t5, t6),
-                scheduleEffect(new Glowboard(demoConfig), t6, t7 = 96000),
-                scheduleEffect(new Equaliser(demoConfig), t6, t7),
-                scheduleEffect(new Tiles(demoConfig), t7, t8 = 160200),
-                scheduleEffect(new Spin(demoConfig), t8, t9 = 192000),
+                scheduleEffect(new Concentric(demoConfig, loadImage("gem-red.png"), loadImage("gem-green.png"), loadImage("gem-blue.png"), loadImage("gem-yellow.png")), t5, t6),
+                scheduleEffect(new Glowboard(demoConfig, 32), t6, t8 = 96000),
+                scheduleEffect(new Equaliser(demoConfig), t6, t7 = 86000),
+                scheduleEffect(new TextWaveSprite(demoConfig, new String[] {"Playing with the audio spectrum"}, demoConfig.getHeight() - 200, 0.8, 10), t6 + 2000, t7),
+                scheduleEffect(new SineLines(demoConfig), t7, t8),
+                scheduleEffect(new Falling(demoConfig, "quaver2.png"), t6, t8),
+                scheduleEffect(new Moire2(demoConfig), t9 = 112000, t10 = 160200),
+                scheduleEffect(new FadeOutAddOnEffect(new Tiles(demoConfig), 2000), t8, 128000),
+                scheduleEffect(new Rings(demoConfig), 128000, 150000),
                 scheduleEffect(new TextRing(demoConfig, new TextRing.RingData[] {
-                        new TextRing.RingData("Coded    in    Java    and    JavaFX", 300, 0.15, 1, 3, 2)}), t8 + 5000, t9),
-                scheduleEffect(new FadeOutAddOnEffect(new WordSearch(demoConfig, "Amazing work\n\nThank you Chris Newland\n\nalias @chriswhocodes"), 2500), t9, t10 = 264000 - 2500),
-                scheduleEffect(new FadeOutAddOnEffect(new SnowfieldSprite(demoConfig), 2500), t9 + 8000, t10),
-                scheduleEffect(new TextFlash(demoConfig, "Thank you for watching", false, 150, 200, 150), t10, t10 + 2500)
+                        new TextRing.RingData("Entirely    in    Java    and    JavaFX", 250, 0.13, -1, 3, 2)}), 150000, t10),
+                scheduleEffect(new Spin(demoConfig), t10, t11 = 192000),
+                //scheduleEffect(new Sea(demoConfig, loadImage("WebFX.png")), t10 + 10000, t11),
+                scheduleEffect(new FadeOutAddOnEffect(new WordSearch(demoConfig, "Amazing work\n\nThank you Chris Newland\n\nalias @chriswhocodes"), 2500), t11, t12 = 264000 - 2500),
+                scheduleEffect(new FadeOutAddOnEffect(new SnowfieldSprite(demoConfig), 2500), t11 + 8000, t12),
+                scheduleEffect(new TextFlash(demoConfig, "Thank you for watching", false, 100, 150, 100), t12, t12 + 2500)
         ));
     }
 
