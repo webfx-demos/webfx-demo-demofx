@@ -16,20 +16,4 @@
         <provider interface="javafx.application.Application">dev.webfx.demo.demofx.DemoFXApplication</provider>
     </providers>
 
-    <embed-resources>
-        <!-- For Burst -->
-        <resource>com/chrisnewland/demofx/images/star.png</resource>
-        <!-- For Concentric -->
-        <resource>com/chrisnewland/demofx/images/tomato.png</resource>
-        <resource>com/chrisnewland/demofx/images/satsuma.png</resource>
-        <resource>com/chrisnewland/demofx/images/pear.png</resource>
-        <resource>com/chrisnewland/demofx/images/apple.png</resource>
-        <resource>com/chrisnewland/demofx/images/orange.png</resource>
-        <resource>com/chrisnewland/demofx/images/pineapple.png</resource>
-        <resource>com/chrisnewland/demofx/images/banana.png</resource>
-        <resource>com/chrisnewland/demofx/images/strawberry.png</resource>
-        <!-- For Falling & Snow Field Sprite -->
-        <resource>com/chrisnewland/demofx/images/flake.png</resource>
-    </embed-resources>
-
 </project>

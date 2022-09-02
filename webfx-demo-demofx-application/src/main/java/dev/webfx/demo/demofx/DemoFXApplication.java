@@ -15,10 +15,7 @@ import com.chrisnewland.demofx.effect.pixel.Twister;
 import com.chrisnewland.demofx.effect.shape.*;
 import com.chrisnewland.demofx.effect.spectral.Equaliser;
 import com.chrisnewland.demofx.effect.sprite.*;
-import com.chrisnewland.demofx.effect.text.TextFlash;
-import com.chrisnewland.demofx.effect.text.TextRing;
-import com.chrisnewland.demofx.effect.text.TextWaveSprite;
-import com.chrisnewland.demofx.effect.text.WordSearch;
+import com.chrisnewland.demofx.effect.text.*;
 import com.chrisnewland.demofx.util.ImageUtil;
 import dev.webfx.extras.imagestore.ImageStore;
 import dev.webfx.platform.resource.Resource;
@@ -41,7 +38,7 @@ public class DemoFXApplication extends Application {
     private final Image quaver2 =  loadDemoImage("quaver2.png");
     private final Image tiger = ImageUtil.loadImageFromResources("tiger.jpeg");
     private Image purpleQuaver;
-    long t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, tend = 264000;
+    long t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, tend = 264000;
 
     @Override
     public void start(Stage stage) {
@@ -124,10 +121,11 @@ public class DemoFXApplication extends Application {
                         new TextRing.RingData("Entirely    in    Java    and    JavaFX", 250, 0.13, -1, 3, 2)}), t13, t14),
                 scheduleEffect(new FadeOutAddOnEffect(new Spin(demoConfig), 2000), t12 = 159874, t13 + 2000),
 
-                scheduleEffect(new FadeOutAddOnEffect(new WordSearch(demoConfig, "Amazing work\n\nThank you Chris Newland\n\nalias @chriswhocodes"), 2500), t14, t15 = tend - 4 * (75 + 100 + 75)),
-                scheduleEffect(new FadeOutAddOnEffect(new SnowfieldSprite(demoConfig), 2500), t14 + 8000, t15),
+                scheduleEffect(new FadeOutAddOnEffect(new WordSearch(demoConfig, "Amazing work\n\nThank you Chris Newland\n\nalias @chriswhocodes"), 2500), t14, (t15 = t14 + 18000) + 2000),
+                scheduleEffect(new FadeOutAddOnEffect(new Credits(demoConfig), 2500), t15, t16 = tend - 4 * (75 + 100 + 75)),
+                scheduleEffect(new FadeOutAddOnEffect(new SnowfieldSprite(demoConfig), 2500), t14 + 8000, t16),
                 //scheduleEffect(new FadeOutAddOnEffect(new Burst(demoConfig), 2500), t14 + 18000, t15),
-                scheduleEffect(new TextFlash(demoConfig, "Thank you for watching", false, 75, 100, 75), t15, tend)
+                scheduleEffect(new TextFlash(demoConfig, "Thank you for watching", false, 75, 100, 75), t16, tend)
         ));
     }
 

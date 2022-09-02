@@ -135,6 +135,8 @@
     <public includes="com/chrisnewland/demofx/images/" path=""/>
     <resource path="com/chrisnewland/demofx/images/letters"/>
     <public includes="com/chrisnewland/demofx/images/letters/" path=""/>
+    <resource path="com/chrisnewland/demofx/text"/>
+    <public includes="com/chrisnewland/demofx/text/" path=""/>
     <!--==============================< webfx-platform-boot >===============================-->
     <source path="dev/webfx/platform/boot"/>
     <source path="dev/webfx/platform/boot/spi"/>
