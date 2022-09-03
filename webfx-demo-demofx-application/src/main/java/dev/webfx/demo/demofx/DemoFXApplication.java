@@ -69,6 +69,7 @@ public class DemoFXApplication extends Application {
     private DemoConfig newDemoConfig(String audioResource) {
         DemoConfig demoConfig = new DemoConfig(scene.getWidth(), scene.getHeight());
         demoConfig.setAudioFilename(Resource.toUrl(audioResource, DemoFXApplication.class));
+        demoConfig.setAudioVolume(0.8); // To prevent saturation during rocky music
         return demoConfig;
     }
 
