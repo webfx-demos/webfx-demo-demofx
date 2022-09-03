@@ -45,8 +45,15 @@ public class DemoFXApplication extends Application {
         stage.setTitle("DemoFX");
         stage.setScene(scene);
         stage.show();
+        runIntroDemo();
+        GraphicsContext loadingContext = new Canvas().getGraphicsContext2D();
+        loadingContext.drawImage(quaver, 0, 0);
+        loadingContext.drawImage(quaver2, 0, 0);
+        loadingContext.drawImage(tiger, 0, 0);
+    }
+
+    private void runIntroDemo() {
         introDemo = newIntroDemo();
-        actualDemo = newActualDemo();
         root.getChildren().setAll(introDemo.getPane());
         introDemo.runDemo();
         root.setOnMousePressed(e -> { // Using setOnMousePressed() because sound doesn't start on iPad if using setOnMouseClicked()
@@ -60,10 +67,7 @@ public class DemoFXApplication extends Application {
             actualDemo.runDemo();
             started = true;
         });
-        GraphicsContext loadingContext = new Canvas().getGraphicsContext2D();
-        loadingContext.drawImage(quaver, 0, 0);
-        loadingContext.drawImage(quaver2, 0, 0);
-        loadingContext.drawImage(tiger, 0, 0);
+        actualDemo = newActualDemo();
     }
 
     private DemoConfig newDemoConfig(String audioResource) {
@@ -88,15 +92,15 @@ public class DemoFXApplication extends Application {
                 // Fractal sequence:
                 // 1) Fractal rings
                 scheduleEffect(new RotateAddOnEffect(new FractalRings(demoConfig), 23920, -1, t2 = 32000, 1), t1, t3 = 39900),
-                // 3) Mandelbrot (declared before 2) so it is displayed behind Spierpinksi)
+                // 3) Mandelbrot (declared before 2) so it is displayed behind Sierpinski)
                 scheduleEffect(new Mandelbrot(demoConfig), t3, t6 = 80000),
-                // 2) Spierpinski
+                // 2) Sierpinski
                 scheduleEffect(new Sierpinski(demoConfig), t2, t4 = 47850),
-                // 4) Chord (on top of Mandelbrot still running)
+                // 4) Chord on top of Mandelbrot (still running)
                 scheduleEffect(new Chord(demoConfig, Color.ORANGE), t4, t5 = 64000),
                 // Text wave between 4) and 5)
                 scheduleEffect(new TextWaveSprite(demoConfig, new String[] {"Realtime Mandelbrot computation"}, demoConfig.getHeight() - 200, 0.8, 10), t4 + 2000, t5),
-                // 5) Concentric colored quavers (on top of Mandelbrot still running)
+                // 5) Concentric colored quavers on top of Mandelbrot (still running)
                 scheduleEffect(new Concentric(demoConfig, 20, createTintedQuaver(Color.web("#00ACEB")), createTintedQuaver(Color.web("#00A656")), createTintedQuaver(Color.web("#FCE400")), createTintedQuaver(Color.web("#F36126")), createTintedQuaver(Color.web("#CE0166")), createTintedQuaver(Color.web("#91248D")))
                         // Pulse times matching the music:
                         .setPulseTimes(64000, 64257, 64500, 64758, 65268, 66000, 66497, 66753, 67258, 68011, 68261, 68754, 69258, 69751, 70251, 70754, 71246, 72005, 72259, 72756, 73254, 73754, 74018, 76001, 76254, 76756, 77256, 77751, 78503, 78754, 79255, 80000, 80256, 80755, 81256, 81650), t5, t6),
@@ -147,7 +151,7 @@ public class DemoFXApplication extends Application {
                 scheduleEffect(new FadeOutAddOnEffect(new SnowfieldSprite(demoConfig), 2500), t14 + 8000, t16),
                 // 4) Thank you for watching (flash text)
                 scheduleEffect(new TextFlash(demoConfig, "Thank you for watching", false, 75, 100, 75), t16, tend)
-        ));
+        )).setOnCompleted(this::runIntroDemo);
     }
 
     private IEffect scheduleEffect(IEffect effect, long start, long stop) {
