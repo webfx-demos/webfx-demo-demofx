@@ -122,7 +122,7 @@ public class DemoFXApplication extends Application {
                 scheduleEffect(new FadeOutAddOnEffect(new Spin(demoConfig), 2000), t12 = 159874, t13 + 2000),
 
                 scheduleEffect(new FadeOutAddOnEffect(new WordSearch(demoConfig, "Amazing work\n\nThank you Chris Newland\n\nalias @chriswhocodes"), 2500), t14, (t15 = t14 + 18000) + 2000),
-                scheduleEffect(new FadeOutAddOnEffect(new Credits(demoConfig), 2500), t15, t16 = tend - 4 * (75 + 100 + 75)),
+                scheduleEffect(new FadeOutAddOnEffect(new Credits(demoConfig, (t16 = tend - 4 * (75 + 100 + 75)) - t15 - 1500), 2500), t15, t16),
                 scheduleEffect(new FadeOutAddOnEffect(new SnowfieldSprite(demoConfig), 2500), t14 + 8000, t16),
                 //scheduleEffect(new FadeOutAddOnEffect(new Burst(demoConfig), 2500), t14 + 18000, t15),
                 scheduleEffect(new TextFlash(demoConfig, "Thank you for watching", false, 75, 100, 75), t16, tend)
