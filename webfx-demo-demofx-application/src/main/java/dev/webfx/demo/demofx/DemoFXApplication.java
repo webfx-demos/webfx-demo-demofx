@@ -107,7 +107,7 @@ public class DemoFXApplication extends Application {
                 // 5) Concentric colored quavers on top of Mandelbrot (still running)
                 scheduleEffect(new Concentric(demoConfig, 20, createTintedQuaver(Color.web("#00ACEB")), createTintedQuaver(Color.web("#00A656")), createTintedQuaver(Color.web("#FCE400")), createTintedQuaver(Color.web("#F36126")), createTintedQuaver(Color.web("#CE0166")), createTintedQuaver(Color.web("#91248D")))
                         // Pulse times matching the music:
-                        .setPulseTimes(64000, 64257, 64500, 64758, 65268, 66000, 66497, 66753, 67258, 68011, 68261, 68754, 69258, 69751, 70251, 70754, 71246, 72005, 72259, 72756, 73254, 73754, 74018, 76001, 76254, 76756, 77256, 77751, 78503, 78754, 79255, 80000, 80256, 80755, 81256, 81650), t5, t6),
+                        .setPulseTimes(64000, 64257, 64758, 65268, 65750, 66497, 66753, 67258, 68011, 68261, 68754, 69258, 69751, 70251, 70754, 71246, 72005, 72259, 72756, 73254, 73754, 76001, 76254, 76756, 77256, 77751, 78503, 78754, 79255, 80000, 80256, 80755, 81256, 81650), t5, t6),
 
                 // Audio spectrum sequence:
                 // 1) Equaliser with falling quavers on top of a glow board
