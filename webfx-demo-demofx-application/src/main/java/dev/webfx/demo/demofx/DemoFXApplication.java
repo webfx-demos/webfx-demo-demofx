@@ -20,6 +20,7 @@ import com.chrisnewland.demofx.effect.text.*;
 import com.chrisnewland.demofx.util.ImageUtil;
 import dev.webfx.extras.imagestore.ImageStore;
 import dev.webfx.platform.resource.Resource;
+import dev.webfx.platform.uischeduler.UiScheduler;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -135,24 +136,24 @@ public class DemoFXApplication extends Application {
                 scheduleEffect(new Twister(demoConfig, Color.web("#FCC738"), Color.web("#E6933F"), Color.web("#FC6038"), Color.web("#F2386E")), t10 = 152000, t11 = 159874),
 
                 // Rocky music 2 sequence:
-                // 1) Spin effect (Java logo) with a fading out effect at the end
-                scheduleEffect(new FadeOutAddOnEffect(new Spin(demoConfig), 2000), t12 = 159874, (t13 = 175000) + 2000),
                 // 2) Text ring (Entirely in Java and JavaFX), on top of mandalas (starting later), on top of a Moire2 effect
-                scheduleEffect(new Moire2(demoConfig), t13, t14 = 192000),
+                scheduleEffect(new Moire2(demoConfig), t13 = 175000, t14 = 192000),
                 scheduleEffect(new Mandala(demoConfig, 32), 179750, t14),
                 scheduleEffect(new TextRing(demoConfig, new TextRing.RingData[] {
                         new TextRing.RingData("Entirely    in    Java    and    JavaFX", 250, 0.13, -1, 3, 2)}), t13, t14),
+                // 1) Spin effect (Java logo) with a fading out effect at the end
+                scheduleEffect(new FadeOutAddOnEffect(new Spin(demoConfig), 2000), t12 = 159874, t13 + 2000),
 
                 // Ending sequence:
                 // 1) Amazing work (word search effect)
                 scheduleEffect(new FadeOutAddOnEffect(new WordSearch(demoConfig, "Amazing work\n\nThank you Chris Newland\n\nalias @chriswhocodes"), 2500), t14, (t15 = t14 + 18000) + 2000),
                 // 3) Credits (declared before 2) so it's behind the snow)
-                scheduleEffect(new FadeOutAddOnEffect(new Credits(demoConfig, Color.web("#D0D0D0"), (t16 = tend - 4 * (75 + 100 + 75)) - t15 - 1500), 2500), t15, t16),
+                scheduleEffect(new FadeOutAddOnEffect(new Credits(demoConfig, Color.web("#D0D0D0"), (t16 = tend - 4 * (75 + 100 + 75)) - t15 - 1000), 2000), t15, t16),
                 // 2) Snow field
-                scheduleEffect(new FadeOutAddOnEffect(new SnowfieldSprite(demoConfig), 2500), t14 + 8000, t16),
+                scheduleEffect(new FadeOutAddOnEffect(new SnowfieldSprite(demoConfig), 2000), t14 + 8000, t16),
                 // 4) Thank you for watching (flash text)
-                scheduleEffect(new TextFlash(demoConfig, "Thank you for watching", false, 75, 100, 75), t16, tend + 1000) // Waiting 1s more before returning to intro
-        )).setOnCompleted(this::runIntroDemo);
+                scheduleEffect(new TextFlash(demoConfig, "Thank you for watching", false, 75, 100, 75), t16, tend)
+        )).setOnCompleted(() -> UiScheduler.scheduleDelay(3000, this::runIntroDemo));  // Waiting 3s more before returning to intro
     }
 
     private IEffect scheduleEffect(IEffect effect, long start, long stop) {

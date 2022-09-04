@@ -8,6 +8,7 @@ module webfx.demo.demofx.application {
     requires webfx.extras.imagestore;
     requires webfx.lib.demofx;
     requires webfx.platform.resource;
+    requires webfx.platform.uischeduler;
     requires webfx.platform.util;
 
     // Exported packages
