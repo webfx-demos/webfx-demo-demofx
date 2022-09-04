@@ -132,7 +132,7 @@ public class DemoFXApplication extends Application {
                 scheduleEffect(new Rings(demoConfig), t9, t10),
                 // 5) Mask stack effect (with tiger image), on top of a blue checkerboard
                 scheduleEffect(new Checkerboard(demoConfig), t10, t11 = 152000),
-                scheduleEffect(new MaskStack(demoConfig, tiger), t10, t11 = 152000),
+                scheduleEffect(new MaskStack(demoConfig, tiger, true), t10, t11 = 152000),
                 // 6) Twister effect, on top of a cyan blue checkerboard
                 scheduleEffect(new Checkerboard(demoConfig, Color.web("#00C2B6")), t10 = 152000, t11 = 159874),
                 scheduleEffect(new Twister(demoConfig, Color.web("#FCC738"), Color.web("#E6933F"), Color.web("#FC6038"), Color.web("#F2386E")), t10 = 152000, t11 = 159874),
