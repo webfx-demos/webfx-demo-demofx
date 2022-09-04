@@ -114,7 +114,7 @@ public class DemoFXApplication extends Application {
                 scheduleEffect(new Equaliser(demoConfig), t6, 88000),
                 // 2) Sine lines with volume effect, on top of a sea of quavers, on top of the same glow board (still running)
                 scheduleEffect(new Sea(demoConfig, purpleQuaver), 88000, t7),
-                scheduleEffect(new VolumeAddOnEffect(new SineLines(demoConfig), 10.0, 23, 14, 22, 15, 17, 5, 21, 12, 13), 88000, t7),
+                scheduleEffect(new VolumeAddOnEffect(new SineLines(demoConfig), 40.0, 22, 14, 25, 15, 17, 5, 21, 12, 23), 88000, t7),
                 scheduleEffect(new SineLines(demoConfig), 88000, t7),
 
                 // Rocky music 1 sequence:
