@@ -22,6 +22,7 @@ import com.chrisnewland.demofx.util.ImageUtil;
 import dev.webfx.extras.imagestore.ImageStore;
 import dev.webfx.platform.resource.Resource;
 import dev.webfx.platform.uischeduler.UiScheduler;
+import dev.webfx.platform.util.collection.Collections;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -32,6 +33,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.Arrays;
+
 public class DemoFXApplication extends Application {
     private final StackPane root = new StackPane();
     private final Scene scene = new Scene(root, 800, 600);
@@ -40,7 +43,6 @@ public class DemoFXApplication extends Application {
     private boolean started;
     private final Image quaver =  loadDemoImage("quaver.png");
     private final Image quaver2 =  loadDemoImage("quaver2.png");
-    private final Image tiger = ImageUtil.loadImageFromResources("tiger.jpeg");
     private Image purpleQuaver;
     long t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, tend = 264000;
 
@@ -50,10 +52,6 @@ public class DemoFXApplication extends Application {
         stage.setScene(scene);
         stage.show();
         runIntroDemo();
-        GraphicsContext loadingContext = new Canvas().getGraphicsContext2D();
-        loadingContext.drawImage(quaver, 0, 0);
-        loadingContext.drawImage(quaver2, 0, 0);
-        loadingContext.drawImage(tiger, 0, 0);
     }
 
     private void runIntroDemo() {
@@ -89,7 +87,7 @@ public class DemoFXApplication extends Application {
     }
 
     private DemoFX newActualDemo() {
-        return new DemoFX(newDemoConfig("DemoFX3.mp3"), (IEffectFactory) demoConfig -> dev.webfx.platform.util.collection.Collections.listOf(
+        return new DemoFX(newDemoConfig("DemoFX3.mp3"), (IEffectFactory) demoConfig -> Collections.listOf(
                 // Starting sequence: Star field
                 scheduleEffect(new StarfieldSprite(demoConfig), 0, t1 = 15820),
 
@@ -105,7 +103,7 @@ public class DemoFXApplication extends Application {
                 // Text wave between 4) and 5)
                 scheduleEffect(new TextWaveSprite(demoConfig, new String[] {"Realtime Mandelbrot computation"}, demoConfig.getHeight() - 200, 0.8, 10), t4 + 2000, t5),
                 // 5) Concentric colored quavers on top of Mandelbrot (still running)
-                scheduleEffect(new Concentric(demoConfig, 20, createTintedQuaver(Color.web("#00ACEB")), createTintedQuaver(Color.web("#00A656")), createTintedQuaver(Color.web("#FCE400")), createTintedQuaver(Color.web("#F36126")), createTintedQuaver(Color.web("#CE0166")), createTintedQuaver(Color.web("#91248D")))
+                scheduleEffect(new Concentric(demoConfig, 18, Arrays.stream("#00ACEB #00A656 #FCE400 #F36126 #CE0166 #91248D".split(" ")).map(c -> createTintedQuaver(Color.web(c))).toArray(Image[]::new))
                         // Pulse times matching the music:
                         .setPulseTimes(64000, 64257, 64758, 65268, 65750, 66497, 66753, 67258, 68011, 68261, 68754, 69258, 69751, 70251, 70754, 71246, 72005, 72259, 72756, 73254, 73754, 76001, 76254, 76756, 77256, 77751, 78503, 78754, 79255, 80000, 80256, 80755, 81256, 81650), t5, t6),
 
@@ -132,7 +130,7 @@ public class DemoFXApplication extends Application {
                 scheduleEffect(new Rings(demoConfig), t9, t10),
                 // 5) Mask stack effect (with tiger image), on top of a blue checkerboard
                 scheduleEffect(new Checkerboard(demoConfig), t10, t11 = 152000),
-                scheduleEffect(new MaskStack(demoConfig, tiger, true), t10, t11 = 152000),
+                scheduleEffect(new MaskStack(demoConfig, true), t10, t11 = 152000),
                 // 6) Twister effect, on top of a cyan blue checkerboard
                 scheduleEffect(new Checkerboard(demoConfig, Color.web("#00C2B6")), t10 = 152000, t11 = 159874),
                 scheduleEffect(new Twister(demoConfig, Color.web("#FCC738"), Color.web("#E6933F"), Color.web("#FC6038"), Color.web("#F2386E")), t10 = 152000, t11 = 159874),
@@ -141,7 +139,7 @@ public class DemoFXApplication extends Application {
                 // 2) Text ring (Entirely in Java and JavaFX), on top of mandalas (starting later), on top of a Moire2 effect
                 scheduleEffect(new Moire2(demoConfig), t13 = 175000, t14 = 192000),
                 scheduleEffect(new Mandala(demoConfig, 16), 184000, t14),
-                scheduleEffect(new Burst(demoConfig, loadDemoImage("star.png"), 8), 188000, t14),
+                scheduleEffect(new Burst(demoConfig, loadDemoImage("star.png"), 8), 187000, t14),
                 scheduleEffect(new TextRing(demoConfig, new TextRing.RingData[] {
                         new TextRing.RingData("Entirely    in    Java    and    JavaFX", 250, 0.13, -1, 3, 2)}), t13, t14),
                 // 1) Spin effect (Java logo) with a fading out effect at the end
@@ -167,8 +165,12 @@ public class DemoFXApplication extends Application {
         return effect;
     }
 
+    private final static GraphicsContext LOADING_CONTEXT = new Canvas().getGraphicsContext2D();
+
     private Image loadDemoImage(String name) {
-        return ImageStore.getOrCreateImage("dev/webfx/demo/demofx/" + name);
+        Image image = ImageStore.getOrCreateImage("dev/webfx/demo/demofx/" + name);
+        LOADING_CONTEXT.drawImage(image, 0, 0); // Force immediate loading in the browser
+        return image;
     }
 
     private Image createTintedQuaver(Color color) {
