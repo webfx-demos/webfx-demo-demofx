@@ -5,6 +5,7 @@ import com.chrisnewland.demofx.DemoFX;
 import com.chrisnewland.demofx.effect.IEffect;
 import com.chrisnewland.demofx.effect.addon.FadeOutAddOnEffect;
 import com.chrisnewland.demofx.effect.addon.RotateAddOnEffect;
+import com.chrisnewland.demofx.effect.addon.VolumeAddOnEffect;
 import com.chrisnewland.demofx.effect.effectfactory.IEffectFactory;
 import com.chrisnewland.demofx.effect.fake3d.SnowfieldSprite;
 import com.chrisnewland.demofx.effect.fake3d.StarfieldSprite;
@@ -112,7 +113,7 @@ public class DemoFXApplication extends Application {
                 scheduleEffect(new Equaliser(demoConfig), t6, 88000),
                 // 2) Sine lines with volume effect, on top of a sea of quavers, on top of the same glow board (still running)
                 scheduleEffect(new Sea(demoConfig, purpleQuaver), 88000, t7),
-                //scheduleEffect(new VolumeAddOnEffect(new SineLines(demoConfig), 4), 88000, t7),
+                scheduleEffect(new VolumeAddOnEffect(new SineLines(demoConfig), 4), 88000, t7),
                 scheduleEffect(new SineLines(demoConfig), 88000, t7),
 
                 // Rocky music 1 sequence:
@@ -146,7 +147,7 @@ public class DemoFXApplication extends Application {
                 // 1) Amazing work (word search effect)
                 scheduleEffect(new FadeOutAddOnEffect(new WordSearch(demoConfig, "Amazing work\n\nThank you Chris Newland\n\nalias @chriswhocodes"), 2500), t14, (t15 = t14 + 18000) + 2000),
                 // 3) Credits (declared before 2) so it's behind the snow)
-                scheduleEffect(new FadeOutAddOnEffect(new Credits(demoConfig, Color.web("#B0B0B0"), (t16 = tend - 4 * (75 + 100 + 75)) - t15 - 1500), 2500), t15, t16),
+                scheduleEffect(new FadeOutAddOnEffect(new Credits(demoConfig, Color.web("#C0C0C0"), (t16 = tend - 4 * (75 + 100 + 75)) - t15 - 1500), 2500), t15, t16),
                 // 2) Snow field
                 scheduleEffect(new FadeOutAddOnEffect(new SnowfieldSprite(demoConfig), 2500), t14 + 8000, t16),
                 // 4) Thank you for watching (flash text)
