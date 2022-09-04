@@ -2,6 +2,7 @@ package dev.webfx.demo.demofx;
 
 import com.chrisnewland.demofx.DemoConfig;
 import com.chrisnewland.demofx.DemoFX;
+import com.chrisnewland.demofx.effect.AbstractEffect;
 import com.chrisnewland.demofx.effect.IEffect;
 import com.chrisnewland.demofx.effect.addon.FadeOutAddOnEffect;
 import com.chrisnewland.demofx.effect.addon.RotateAddOnEffect;
@@ -35,6 +36,7 @@ public class DemoFXApplication extends Application {
     private final StackPane root = new StackPane();
     private final Scene scene = new Scene(root, 800, 600);
     private DemoFX introDemo, actualDemo;
+    private AbstractEffect lastEffect;
     private boolean started;
     private final Image quaver =  loadDemoImage("quaver.png");
     private final Image quaver2 =  loadDemoImage("quaver2.png");
@@ -59,15 +61,14 @@ public class DemoFXApplication extends Application {
         root.getChildren().setAll(introDemo.getPane());
         introDemo.runDemo();
         root.setOnMousePressed(e -> { // Using setOnMousePressed() because sound doesn't start on iPad if using setOnMouseClicked()
-            if (!started)
+            if (!started) {
                 introDemo.stopDemo();
-            else {
+                //actualDemo = newActualDemo();
+                root.getChildren().setAll(actualDemo.getPane());
+                actualDemo.runDemo();
+                started = true;
+            } else
                 actualDemo.stopDemo();
-                actualDemo = newActualDemo();
-            }
-            root.getChildren().setAll(actualDemo.getPane());
-            actualDemo.runDemo();
-            started = true;
         });
         started = false;
         actualDemo = newActualDemo();
@@ -153,8 +154,8 @@ public class DemoFXApplication extends Application {
                 // 2) Snow field
                 scheduleEffect(new FadeOutAddOnEffect(new SnowfieldSprite(demoConfig), 2000), t14 + 8000, t16),
                 // 4) Thank you for watching (flash text)
-                scheduleEffect(new TextFlash(demoConfig, "Thank you for watching", false, 75, 100, 75), t16, tend)
-        )).setOnCompleted(() -> UiScheduler.scheduleDelay(3000, this::runIntroDemo));  // Waiting 3s more before returning to intro
+                scheduleEffect(lastEffect = new TextFlash(demoConfig, "Thank you for watching", false, 75, 100, 75), t16, tend)
+        )).setOnCompleted(() -> UiScheduler.scheduleDelay(lastEffect.isEffectFinished() ? 2000 : 0, this::runIntroDemo));  // Waiting 2s more before returning to intro
     }
 
     private IEffect scheduleEffect(IEffect effect, long start, long stop) {
