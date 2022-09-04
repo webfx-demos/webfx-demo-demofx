@@ -140,7 +140,8 @@ public class DemoFXApplication extends Application {
                 // Rocky music 2 sequence:
                 // 2) Text ring (Entirely in Java and JavaFX), on top of mandalas (starting later), on top of a Moire2 effect
                 scheduleEffect(new Moire2(demoConfig), t13 = 175000, t14 = 192000),
-                scheduleEffect(new Mandala(demoConfig, 32), 179750, t14),
+                scheduleEffect(new Mandala(demoConfig, 16), 184000, t14),
+                scheduleEffect(new Burst(demoConfig, loadDemoImage("star.png"), 8), 188000, t14),
                 scheduleEffect(new TextRing(demoConfig, new TextRing.RingData[] {
                         new TextRing.RingData("Entirely    in    Java    and    JavaFX", 250, 0.13, -1, 3, 2)}), t13, t14),
                 // 1) Spin effect (Java logo) with a fading out effect at the end
@@ -150,12 +151,12 @@ public class DemoFXApplication extends Application {
                 // 1) Amazing work (word search effect)
                 scheduleEffect(new FadeOutAddOnEffect(new WordSearch(demoConfig, "Amazing work\n\nThank you Chris Newland\n\nalias @chriswhocodes"), 2500), t14, (t15 = t14 + 18000) + 2000),
                 // 3) Credits (declared before 2) so it's behind the snow)
-                scheduleEffect(new FadeOutAddOnEffect(new Credits(demoConfig, Color.web("#D0D0D0"), (t16 = tend - 4 * (75 + 100 + 75)) - t15), 2000), t15, t16),
+                scheduleEffect(new FadeOutAddOnEffect(new Credits(demoConfig, Color.web("#D0D0D0"), (t16 = tend - 4 * (75 + 100 + 75)) - t15), 1000), t15, t16),
                 // 2) Snow field
-                scheduleEffect(new FadeOutAddOnEffect(new SnowfieldSprite(demoConfig), 2000), t14 + 8000, t16),
+                scheduleEffect(new FadeOutAddOnEffect(new SnowfieldSprite(demoConfig), 1000), t14 + 8000, t16),
                 // 4) Thank you for watching (flash text)
                 scheduleEffect(lastEffect = new TextFlash(demoConfig, "Thank you for watching", false, 75, 100, 75), t16, tend)
-        )).setOnCompleted(() -> UiScheduler.scheduleDelay(lastEffect.isEffectFinished() ? 2000 : 0, this::runIntroDemo));  // Waiting 2s more before returning to intro
+        )).setOnCompleted(() -> UiScheduler.scheduleDelay(lastEffect.isEffectFinished() ? 1000 : 0, this::runIntroDemo));  // Waiting 1s more before returning to intro
     }
 
     private IEffect scheduleEffect(IEffect effect, long start, long stop) {
