@@ -147,7 +147,7 @@ public class DemoFXApplication extends Application {
 
                 // Ending sequence:
                 // 1) Amazing work (word search effect)
-                scheduleEffect(new FadeOutAddOnEffect(new WordSearch(demoConfig, "Amazing work\n\nThank you Chris Newland\n\nalias @chriswhocodes"), 2500), t14, (t15 = t14 + 18000) + 2000),
+                scheduleEffect(new FadeOutAddOnEffect(new WordSearch(demoConfig, "Amazing work\n\nThank you Chris Newland\n\n@chriswhocodes"), 2500), t14, (t15 = t14 + 18000) + 2000),
                 // 3) Credits (declared before 2) so it's behind the snow)
                 scheduleEffect(new FadeOutAddOnEffect(new Credits(demoConfig, Color.web("#D0D0D0"), (t16 = tend - 4 * (75 + 100 + 75)) - t15), 1000), t15, t16),
                 // 2) Snow field
