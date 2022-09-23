@@ -89,7 +89,7 @@ public class DemoFXApplication extends Application {
     private DemoFX newActualDemo() {
         return new DemoFX(newDemoConfig("DemoFX3.mp3"), (IEffectFactory) demoConfig -> Collections.listOf(
                 // Starting sequence: Star field
-                new FadeOutAddOnEffect(scheduleEffect(new StarfieldSprite(demoConfig), 0, (t1 = 15820) + 5000), 5000 /* 5s fadeout effect when fractal rings starts */),
+                new FadeOutAddOnEffect(scheduleEffect(new StarfieldSprite(demoConfig), 0, (t1 = 15820) + 5000), 3000 /* 3s fadeout effect 2s after fractal rings starts */),
 
                 // Fractal sequence:
                 // 1) Fractal rings
