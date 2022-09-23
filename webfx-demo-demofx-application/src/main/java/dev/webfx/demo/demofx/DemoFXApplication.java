@@ -184,6 +184,6 @@ public class DemoFXApplication extends Application {
 
     private void tintQuaver(Image quaver, WritableImage image, Color color) {
         if (quaver.getProgress() == 1)
-            ImageUtil.tintImage(quaver, color.getHue(), image);
+            ImageUtil.tintImage(quaver, color.getHue(), 1, image);
     }
 }
