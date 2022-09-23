@@ -89,7 +89,7 @@ public class DemoFXApplication extends Application {
     private DemoFX newActualDemo() {
         return new DemoFX(newDemoConfig("DemoFX3.mp3"), (IEffectFactory) demoConfig -> Collections.listOf(
                 // Starting sequence: Star field
-                scheduleEffect(new StarfieldSprite(demoConfig), 0, t1 = 15820),
+                new FadeOutAddOnEffect(scheduleEffect(new StarfieldSprite(demoConfig), 0, (t1 = 15820) + 5000), 5000 /* 5s fadeout effect when fractal rings starts */),
 
                 // Fractal sequence:
                 // 1) Fractal rings
@@ -157,7 +157,7 @@ public class DemoFXApplication extends Application {
         )).setOnCompleted(() -> UiScheduler.scheduleDelay(lastEffect.isEffectFinished() ? 1000 : 0, this::runIntroDemo));  // Waiting 1s more before returning to intro
     }
 
-    private IEffect scheduleEffect(IEffect effect, long start, long stop) {
+    private <E extends IEffect> E scheduleEffect(E effect, long start, long stop) {
         if (start > 0)
             effect.setStartOffsetMillis(start);
         if (stop > 0)
