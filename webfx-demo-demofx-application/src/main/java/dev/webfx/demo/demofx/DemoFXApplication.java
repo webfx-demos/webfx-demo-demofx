@@ -140,7 +140,7 @@ public class DemoFXApplication extends Application {
                 scheduleEffect(new Moire2(demoConfig), t13 = 175000, t14 = 192000),
                 scheduleEffect(new Mandala(demoConfig, 16), 184000, t14),
                 scheduleEffect(new Burst(demoConfig, loadDemoImage("star.png"), 8), 187000, t14),
-                scheduleEffect(new TextRing(demoConfig, new TextRing.RingData("Entirely    in    Java    and    JavaFX", Math.min(demoConfig.getWidth(), demoConfig.getHeight()) * 0.4, 0.13, -1, 3, 2)), t13, t14),
+                scheduleEffect(new TextRing(demoConfig, new TextRing.RingData("Entirely    in    Java    and    JavaFX", Math.min(demoConfig.getWidth(), demoConfig.getHeight()) * 0.4, 0.12, -1, 3.25, 2)), t13, t14),
                 // 1) Spin effect (Java logo) with a fading out effect at the end
                 scheduleEffect(new FadeOutAddOnEffect(new Spin(demoConfig), 2000), t12 = 159874, t13 + 2000),
 
