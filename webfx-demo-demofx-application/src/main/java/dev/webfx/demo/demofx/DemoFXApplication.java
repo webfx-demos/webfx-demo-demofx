@@ -82,7 +82,7 @@ public class DemoFXApplication extends Application {
     private DemoFX newIntroDemo() {
         return new DemoFX(newDemoConfig(null), (IEffectFactory) demoConfig -> dev.webfx.platform.util.collection.Collections.listOf(
                 new WordSearch(demoConfig, "Animation using DemoFX\n\nA JavaFX Canvas library\n\nby Chris Newland"),
-                new TextWaveSprite(demoConfig, new String[] {"Click to play"}, demoConfig.getHeight() * 0.75, demoConfig.getHeight() / 1000, 5, true)
+                new TextWaveSprite(demoConfig, new String[] {"Click to play"}, demoConfig.getHeight() * 0.75, demoConfig.getHeight() / 1000, Math.max(3, Math.min(5, demoConfig.getWidth() / 200)), true)
                 ));
     }
 
@@ -101,7 +101,7 @@ public class DemoFXApplication extends Application {
                 // 4) Chord on top of Mandelbrot (still running)
                 scheduleEffect(new Chord(demoConfig, Color.ORANGE), t4, t5 = 64000),
                 // Text wave between 4) and 5)
-                scheduleEffect(new TextWaveSprite(demoConfig, new String[] {"Realtime Mandelbrot computation"}, demoConfig.getHeight() * 0.75, demoConfig.getHeight() / 1000, 10), t4 + 2000, t5),
+                scheduleEffect(new TextWaveSprite(demoConfig, new String[] {"Realtime Mandelbrot computation"}, demoConfig.getHeight() * 0.75, demoConfig.getHeight() / 1200, 2 * Math.max(3, Math.min(5, demoConfig.getWidth() / 200))), t4 + 2000, t5),
                 // 5) Concentric colored quavers on top of Mandelbrot (still running)
                 scheduleEffect(new Concentric(demoConfig, 18, Arrays.stream("#00ACEB #00A656 #FCE400 #F36126 #CE0166 #91248D".split(" ")).map(c -> createTintedQuaver(Color.web(c))).toArray(Image[]::new))
                         // Pulse times matching the music:
