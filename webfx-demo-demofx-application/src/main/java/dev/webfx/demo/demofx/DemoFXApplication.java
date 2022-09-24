@@ -37,7 +37,7 @@ import java.util.Arrays;
 
 public class DemoFXApplication extends Application {
     private final StackPane root = new StackPane();
-    private final Scene scene = new Scene(root, 800, 600);
+    private final Scene scene = new Scene(root, 375, 667);
     private DemoFX introDemo, actualDemo;
     private AbstractEffect lastEffect;
     private boolean started;
@@ -140,8 +140,7 @@ public class DemoFXApplication extends Application {
                 scheduleEffect(new Moire2(demoConfig), t13 = 175000, t14 = 192000),
                 scheduleEffect(new Mandala(demoConfig, 16), 184000, t14),
                 scheduleEffect(new Burst(demoConfig, loadDemoImage("star.png"), 8), 187000, t14),
-                scheduleEffect(new TextRing(demoConfig, new TextRing.RingData[] {
-                        new TextRing.RingData("Entirely    in    Java    and    JavaFX", 250, 0.13, -1, 3, 2)}), t13, t14),
+                scheduleEffect(new TextRing(demoConfig, new TextRing.RingData("Entirely    in    Java    and    JavaFX", Math.min(demoConfig.getWidth(), demoConfig.getHeight()) * 0.4, 0.13, -1, 3, 2)), t13, t14),
                 // 1) Spin effect (Java logo) with a fading out effect at the end
                 scheduleEffect(new FadeOutAddOnEffect(new Spin(demoConfig), 2000), t12 = 159874, t13 + 2000),
 
@@ -184,6 +183,6 @@ public class DemoFXApplication extends Application {
 
     private void tintQuaver(Image quaver, WritableImage image, Color color) {
         if (quaver.getProgress() == 1)
-            ImageUtil.tintImage(quaver, color.getHue(), 1, image);
+            ImageUtil.tintImage(quaver, color.getHue(), image);
     }
 }
