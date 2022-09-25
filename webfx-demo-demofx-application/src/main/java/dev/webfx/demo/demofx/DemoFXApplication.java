@@ -88,8 +88,8 @@ public class DemoFXApplication extends Application {
 
     private DemoFX newActualDemo() {
         return new DemoFX(newDemoConfig("DemoFX3.mp3"), (IEffectFactory) demoConfig -> Collections.listOf(
-                // Starting sequence: Colored star field with 1/2 stars white, 1/4 blue and 1/4 purple
-                new FadeOutAddOnEffect(scheduleEffect(new StarfieldSprite(demoConfig, Color.WHITE, Color.WHITE, Color.web("#0c53a9"), Color.web("#850ca6")), 0, (t1 = 15820) + 5000), 3000 /* 3s fadeout effect 2s after fractal rings starts */),
+                // Starting sequence: Star field with majority white stars, then blue, purple & orange stars
+                new FadeOutAddOnEffect(scheduleEffect(new StarfieldSprite(demoConfig, Color.WHITE, Color.WHITE, Color.web("#0c53a9"), Color.web("#850ca6"), Color.web("#a25e11")), 0, (t1 = 15820) + 5000), 3000 /* 3s fadeout effect 2s after fractal rings starts */),
 
                 // Fractal sequence:
                 // 1) Fractal rings
