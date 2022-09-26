@@ -24,6 +24,7 @@ import dev.webfx.platform.resource.Resource;
 import dev.webfx.platform.uischeduler.UiScheduler;
 import dev.webfx.platform.util.collection.Collections;
 import javafx.application.Application;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -58,11 +59,12 @@ public class DemoFXApplication extends Application {
         introDemo = newIntroDemo();
         root.getChildren().setAll(introDemo.getPane());
         introDemo.runDemo();
+        root.setCursor(Cursor.HAND);
         root.setOnMousePressed(e -> { // Using setOnMousePressed() because sound doesn't start on iPad if using setOnMouseClicked()
             if (!started) {
                 introDemo.stopDemo();
-                //actualDemo = newActualDemo();
                 root.getChildren().setAll(actualDemo.getPane());
+                root.setCursor(Cursor.DEFAULT);
                 actualDemo.runDemo();
                 started = true;
             } else
