@@ -60,7 +60,7 @@ public class DemoFXApplication extends Application {
         root.getChildren().setAll(introDemo.getPane());
         introDemo.runDemo();
         root.setCursor(Cursor.HAND);
-        root.setOnMousePressed(e -> { // Using setOnMousePressed() because sound doesn't start on iPad if using setOnMouseClicked()
+        root.setOnMouseClicked(e -> {
             if (!started) {
                 introDemo.stopDemo();
                 root.getChildren().setAll(actualDemo.getPane());
