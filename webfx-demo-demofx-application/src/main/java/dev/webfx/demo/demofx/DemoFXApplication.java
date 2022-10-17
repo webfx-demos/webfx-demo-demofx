@@ -19,15 +19,12 @@ import com.chrisnewland.demofx.effect.spectral.Equaliser;
 import com.chrisnewland.demofx.effect.sprite.*;
 import com.chrisnewland.demofx.effect.text.*;
 import com.chrisnewland.demofx.util.ImageUtil;
-import dev.webfx.extras.imagestore.ImageStore;
 import dev.webfx.platform.resource.Resource;
 import dev.webfx.platform.uischeduler.UiScheduler;
 import dev.webfx.platform.util.collection.Collections;
 import javafx.application.Application;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.StackPane;
@@ -166,12 +163,8 @@ public class DemoFXApplication extends Application {
         return effect;
     }
 
-    private final static GraphicsContext LOADING_CONTEXT = new Canvas().getGraphicsContext2D();
-
     private Image loadDemoImage(String name) {
-        Image image = ImageStore.getOrCreateImage("dev/webfx/demo/demofx/" + name);
-        LOADING_CONTEXT.drawImage(image, 0, 0); // Force immediate loading in the browser
-        return image;
+        return new Image("dev/webfx/demo/demofx/" + name, true);
     }
 
     private Image createTintedQuaver(Color color) {
