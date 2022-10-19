@@ -85,8 +85,6 @@
     <source path="dev/webfx/demo/demofx"/>
     <resource path="dev/webfx/demo/demofx"/>
     <public includes="dev/webfx/demo/demofx/" path=""/>
-    <!--============================< webfx-extras-imagestore >=============================-->
-    <source path="dev/webfx/extras/imagestore"/>
     <!--=================================< webfx-kit-gwt >==================================-->
     <source path="dev/webfx/kit/launcher/spi/impl/gwt"/>
     <source path="dev/webfx/kit/mapper/spi/impl/gwt"/>
