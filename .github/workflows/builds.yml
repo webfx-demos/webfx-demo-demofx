@@ -33,17 +33,44 @@ jobs:
     strategy:
       matrix:
         app: [{name: 'DemoFX', module-token: 'webfx-demo-demofx', gwt-token: 'webfx_demo_demofx', web-push-branch: 'demofx', ios-bundle-id: 'dev.webfx.demo.demofx', version: '0.1.0-SNAPSHOT'}]
-        os-config:  [1]
+        os-config:  [1, 2, 3, 4]
         include:
           - os-config: 1 # Generates builds 1) 2) 3) 4) & 5)
             os: ubuntu-latest
             # Note: 1) must run on Ubuntu because the GitHub push action (to update the web-build branch) works only on Ubuntu
             web-artifact-suffix:           'Web.war'                            # build 1)
-            #fatjar-artifact-suffix:        'Linux-x64-runnable.jar'             # build 2)
-            #jvm-deb-artifact-suffix:       'Linux-x64-jvm-package.deb'          # build 3)
-            #jvm-rpm-artifact-suffix:       'Linux-x64-jvm-package.rpm'          # build 4)
-            #gluon-desktop-arch-token:      'x86_64-linux'                       # build 5)
-            #gluon-desktop-artifact-suffix: 'Linux-x64-native-runnable'          # build 5)
+            fatjar-artifact-suffix:        'Linux-x64-runnable.jar'             # build 2)
+            jvm-deb-artifact-suffix:       'Linux-x64-jvm-package.deb'          # build 3)
+            jvm-rpm-artifact-suffix:       'Linux-x64-jvm-package.rpm'          # build 4)
+            gluon-desktop-arch-token:      'x86_64-linux'                       # build 5)
+            gluon-desktop-artifact-suffix: 'Linux-x64-native-runnable'          # build 5)
+
+          - os-config: 2 # Generates build 6) - Could be in os-config 1 but moved it a separate config to speed up (parallel run)
+            os: ubuntu-latest
+            gluon-android-arch-token:      'aarch64-android'                    # build 6)
+            gluon-android-artifact-suffix: 'Android-aarch64-native-package.apk' # build 6)
+
+          - os-config: 3 # Generates builds 7) 8) 9) & 10)
+            os: windows-latest
+            fatjar-artifact-suffix:        'Windows-x64-runnable.jar'           # build 7)
+            jvm-exe-artifact-suffix:       'Windows-x64-jvm-installer.exe'      # build 8)
+            jvm-msi-artifact-suffix:       'Windows-x64-jvm-installer.msi'      # build 9)
+            gluon-desktop-arch-token:      'x86_64-windows'                     # build 10)
+            # Commented as getting error: Error running candle to generate wixobj
+            # gluon-desktop-artifact-suffix: 'Windows-x64-native-runnable.exe'    # build 10)
+            # msi-desktop-artifact-suffix:   'Windows-x64-jvm-installer.msi'      # build 9)
+
+          - os-config: 4 # Generates builds 11) 12) 13) 14) & 15)
+            os: macos-latest
+            fatjar-artifact-suffix:        'MacOS-x64.jar'                      # build 11)
+            jvm-dmg-artifact-suffix:       'MacOS-x64-jvm.dmg'                  # build 12)
+            jvm-pkg-artifact-suffix:       'MacOS-x64-jvm.pkg'                  # build 13)
+            # Commented MacOS Desktop due to new error from Gluon plugin: No valid Identity (Certificate) found for macOS development.
+            # gluon-desktop-arch-token:      'x86_64-darwin'                      # build 14)
+            # gluon-desktop-Artifact-suffix: 'MacOS-x64-native-runnable'          # build 14)
+            # Note: the iOS build needs the Apple certificate in secrets (the steps will be skipped otherwise)
+            gluon-ios-arch-token:          'arm64-ios'                          # build 15)
+            gluon-ios-artifact-suffix:     'iOS-arm64-native.ipa'               # build 15)
 
     env:
       app-name:  ${{ matrix.app.name }}
@@ -286,7 +313,7 @@ jobs:
       # Staging 5) | 14)
       - if: matrix.gluon-desktop-artifact-suffix != null && runner.os != 'Windows'
         name: Copy native Desktop to staging (Linux or MacOS)
-        run: cp ${{ env.app-gluon-module-dir }}/target/gluonfx/${{ matrix.gluon-desktop-arch-token }}/${{ matrix.app.module-token }}* staging/${{ env.app-name }}-${{ matrix.gluon-desktop-artifact-suffix }}
+        run: cp ${{ env.app-gluon-module-dir }}/target/gluonfx/${{ matrix.gluon-desktop-arch-token }}/${{ matrix.app.gluon-token }}* staging/${{ env.app-name }}-${{ matrix.gluon-desktop-artifact-suffix }}
 
       # Staging 10)
       - if: matrix.gluon-desktop-artifact-suffix != null && runner.os == 'Windows'
