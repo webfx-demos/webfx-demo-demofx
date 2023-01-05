@@ -10,6 +10,9 @@ module webfx.demo.demofx.application.gluon {
     requires webfx.platform.console.java;
     requires webfx.platform.resource.java;
     requires webfx.platform.scheduler.java;
-    requires webfx.platform.shutdown.java;
+    requires webfx.platform.shutdown.gluon;
+
+    // Meta Resource package
+    opens dev.webfx.platform.meta.exe;
 
 }
