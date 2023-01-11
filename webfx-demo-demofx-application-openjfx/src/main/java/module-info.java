@@ -6,6 +6,7 @@ module webfx.demo.demofx.application.openjfx {
     requires javafx.media;
     requires webfx.demo.demofx.application;
     requires webfx.kit.openjfx;
+    requires webfx.kit.platform.audio.openjfx.gwt;
     requires webfx.platform.boot.java;
     requires webfx.platform.console.java;
     requires webfx.platform.resource.java;
