@@ -23,19 +23,21 @@ import dev.webfx.platform.resource.Resource;
 import dev.webfx.platform.uischeduler.UiScheduler;
 import dev.webfx.platform.util.collection.Collections;
 import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.util.Arrays;
 
 public class DemoFXApplication extends Application {
     private final StackPane root = new StackPane();
-    private final Scene scene = new Scene(root, 800, 600);
+    private final Scene scene;
     private DemoFX introDemo, actualDemo;
     private AbstractEffect lastEffect;
     private boolean started;
@@ -43,6 +45,17 @@ public class DemoFXApplication extends Application {
     private final Image quaver2 =  loadDemoImage("quaver2.png");
     private Image purpleQuaver;
     long t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, tend = 264000;
+
+    public DemoFXApplication() {
+        Rectangle2D screenVisualBounds = Screen.getPrimary().getVisualBounds();
+        double sceneWidth = 800, sceneHeight = 600; // Limiting dimensions for big screens
+        // If it doesn't fit in the screen (ex: mobiles & tablets), we switch to full screen
+        if (sceneWidth > screenVisualBounds.getWidth() || sceneHeight > screenVisualBounds.getHeight()) {
+            sceneWidth = screenVisualBounds.getWidth();
+            sceneHeight = screenVisualBounds.getHeight();
+        }
+        scene = new Scene(root, sceneWidth, sceneHeight);
+    }
 
     @Override
     public void start(Stage stage) {
