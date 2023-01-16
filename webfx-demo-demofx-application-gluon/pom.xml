@@ -54,7 +54,7 @@
 
         <dependency>
             <groupId>dev.webfx</groupId>
-            <artifactId>webfx-platform-resource-java</artifactId>
+            <artifactId>webfx-platform-resource-gluon</artifactId>
             <version>0.1.0-SNAPSHOT</version>
         </dependency>
 
@@ -81,15 +81,20 @@
                     <attachList>
                         <list>audio</list>
                         <list>lifecycle</list>
+                        <list>storage</list>
                     </attachList>
                     <resourcesList>
-                        <list>dev/webfx/platform/meta/exe/[^/]+</list>
-                        <list>dev/webfx/demo/demofx/[^/]+</list>
                         <list>com/chrisnewland/demofx/images/[^/]+</list>
                         <list>com/chrisnewland/demofx/images/letters/[^/]+</list>
                         <list>com/chrisnewland/demofx/text/[^/]+</list>
+                        <list>dev/webfx/demo/demofx/[^/]+</list>
+                        <list>dev/webfx/platform/meta/exe/[^/]+</list>
                         <list>images/checkbox/[^/]+</list>
                     </resourcesList>
+                    <releaseConfiguration>
+                        <!-- Android -->
+                        <appLabel>DemoFX</appLabel>
+                    </releaseConfiguration>
                 </configuration>
             </plugin>
         </plugins>
