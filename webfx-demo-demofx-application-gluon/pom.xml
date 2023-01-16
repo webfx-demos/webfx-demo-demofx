@@ -84,12 +84,12 @@
                         <list>storage</list>
                     </attachList>
                     <resourcesList>
-                        <list>com/chrisnewland/demofx/images/[^/]+</list>
-                        <list>com/chrisnewland/demofx/images/letters/[^/]+</list>
-                        <list>com/chrisnewland/demofx/text/[^/]+</list>
-                        <list>dev/webfx/demo/demofx/[^/]+</list>
-                        <list>dev/webfx/platform/meta/exe/[^/]+</list>
-                        <list>images/checkbox/[^/]+</list>
+                        <list>com/chrisnewland/demofx/images/[^/]+$</list>
+                        <list>com/chrisnewland/demofx/images/letters/[^/]+$</list>
+                        <list>com/chrisnewland/demofx/text/[^/]+$</list>
+                        <list>dev/webfx/demo/demofx/[^/]+$</list>
+                        <list>dev/webfx/platform/meta/exe/[^/]+$</list>
+                        <list>images/checkbox/[^/]+$</list>
                     </resourcesList>
                     <releaseConfiguration>
                         <!-- Android -->
