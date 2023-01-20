@@ -91,10 +91,12 @@
                         <list>dev/webfx/platform/meta/exe/[^/]+$</list>
                         <list>images/checkbox/[^/]+$</list>
                     </resourcesList>
+                    <appIdentifier>dev.webfx.demo.demofx</appIdentifier>
                     <releaseConfiguration>
                         <!-- Android -->
                         <appLabel>DemoFX</appLabel>
                     </releaseConfiguration>
+
                 </configuration>
             </plugin>
         </plugins>
