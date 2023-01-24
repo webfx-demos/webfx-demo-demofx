@@ -19,18 +19,17 @@ import com.chrisnewland.demofx.effect.spectral.Equaliser;
 import com.chrisnewland.demofx.effect.sprite.*;
 import com.chrisnewland.demofx.effect.text.*;
 import com.chrisnewland.demofx.util.ImageUtil;
+import dev.webfx.kit.util.scene.DeviceSceneUtil;
 import dev.webfx.platform.resource.Resource;
 import dev.webfx.platform.uischeduler.UiScheduler;
 import dev.webfx.platform.util.collection.Collections;
 import javafx.application.Application;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.util.Arrays;
@@ -47,14 +46,7 @@ public class DemoFXApplication extends Application {
     long t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, tend = 264000;
 
     public DemoFXApplication() {
-        Rectangle2D screenVisualBounds = Screen.getPrimary().getVisualBounds();
-        double sceneWidth = 800, sceneHeight = 600; // Limiting dimensions for big screens
-        // If it doesn't fit in the screen (ex: mobiles & tablets), we switch to full screen
-        if (sceneWidth > screenVisualBounds.getWidth() || sceneHeight > screenVisualBounds.getHeight()) {
-            sceneWidth = screenVisualBounds.getWidth();
-            sceneHeight = screenVisualBounds.getHeight();
-        }
-        scene = new Scene(root, sceneWidth, sceneHeight);
+        scene = DeviceSceneUtil.newScene(root, 800, 600);
     }
 
     @Override
@@ -92,7 +84,7 @@ public class DemoFXApplication extends Application {
     }
 
     private DemoFX newIntroDemo() {
-        return new DemoFX(newDemoConfig(null), (IEffectFactory) demoConfig -> dev.webfx.platform.util.collection.Collections.listOf(
+        return new DemoFX(newDemoConfig(null), (IEffectFactory) demoConfig -> Collections.listOf(
                 new WordSearch(demoConfig, "Animation using DemoFX\n\nA JavaFX Canvas library\n\nby Chris Newland"),
                 new TextWaveSprite(demoConfig, new String[] {"Click to play"}, demoConfig.getHeight() * 0.75, demoConfig.getHeight() / 1000, Math.max(3, Math.min(5, demoConfig.getWidth() / 150)), true)
                 ));
