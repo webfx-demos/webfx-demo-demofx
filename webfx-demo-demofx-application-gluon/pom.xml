@@ -54,7 +54,7 @@
 
         <dependency>
             <groupId>dev.webfx</groupId>
-            <artifactId>webfx-platform-os-java</artifactId>
+            <artifactId>webfx-platform-os-gluon</artifactId>
             <version>0.1.0-SNAPSHOT</version>
         </dependency>
 
@@ -88,6 +88,7 @@
                         <list>audio</list>
                         <list>lifecycle</list>
                         <list>storage</list>
+                        <list>util</list>
                     </attachList>
                     <resourcesList>
                         <list>com/chrisnewland/demofx/images/[^/]+$</list>
