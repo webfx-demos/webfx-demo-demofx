@@ -37,7 +37,7 @@ import java.util.Arrays;
 public class DemoFXApplication extends Application {
     private final StackPane root = new StackPane();
     private final Scene scene;
-    private DemoFX introDemo, actualDemo;
+    private DemoFX introDemo, waitDemo, actualDemo;
     private AbstractEffect lastEffect;
     private boolean started;
     private final Image quaver =  loadDemoImage("quaver.png");
@@ -65,14 +65,20 @@ public class DemoFXApplication extends Application {
         root.setOnMouseClicked(e -> {
             if (!started) {
                 introDemo.stopDemo();
-                root.getChildren().setAll(actualDemo.getPane());
                 root.setCursor(Cursor.DEFAULT);
-                actualDemo.runDemo();
+                root.getChildren().setAll(waitDemo.getPane());
+                waitDemo.runDemo();
+                UiScheduler.scheduleInAnimationFrame(() -> {
+                    waitDemo.stopDemo();
+                    root.getChildren().setAll(actualDemo.getPane());
+                    actualDemo.runDemo();
+                }, 5);
                 started = true;
             } else
                 actualDemo.stopDemo();
         });
         started = false;
+        waitDemo = newWaitDemo();
         actualDemo = newActualDemo();
     }
 
@@ -87,7 +93,13 @@ public class DemoFXApplication extends Application {
         return new DemoFX(newDemoConfig(null), (IEffectFactory) demoConfig -> Collections.listOf(
                 new WordSearch(demoConfig, "Animation using DemoFX\n\nA JavaFX Canvas library\n\nby Chris Newland"),
                 new TextWaveSprite(demoConfig, new String[] {"Click to play"}, demoConfig.getHeight() * 0.75, demoConfig.getHeight() / 1000, Math.max(3, Math.min(5, demoConfig.getWidth() / 150)), true)
-                ));
+        ));
+    }
+
+    private DemoFX newWaitDemo() {
+        return new DemoFX(newDemoConfig(null), (IEffectFactory) demoConfig -> Collections.listOf(
+                new WordSearch(demoConfig, "Doing pre-computation\n\nbut most animation\n\nis realtime", 0)
+        ));
     }
 
     private DemoFX newActualDemo() {
