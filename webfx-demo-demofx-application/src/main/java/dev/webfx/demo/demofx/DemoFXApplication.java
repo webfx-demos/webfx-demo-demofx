@@ -20,6 +20,7 @@ import com.chrisnewland.demofx.effect.sprite.*;
 import com.chrisnewland.demofx.effect.text.*;
 import com.chrisnewland.demofx.util.ImageUtil;
 import dev.webfx.kit.util.scene.DeviceSceneUtil;
+import dev.webfx.platform.os.OperatingSystem;
 import dev.webfx.platform.resource.Resource;
 import dev.webfx.platform.uischeduler.UiScheduler;
 import dev.webfx.platform.util.collection.Collections;
@@ -72,7 +73,7 @@ public class DemoFXApplication extends Application {
                     waitDemo.stopDemo();
                     root.getChildren().setAll(actualDemo.getPane());
                     actualDemo.runDemo();
-                }, 5);
+                }, 6);
                 started = true;
             } else
                 actualDemo.stopDemo();
@@ -92,7 +93,7 @@ public class DemoFXApplication extends Application {
     private DemoFX newIntroDemo() {
         return new DemoFX(newDemoConfig(null), (IEffectFactory) demoConfig -> Collections.listOf(
                 new WordSearch(demoConfig, "Animation using DemoFX\n\nA JavaFX Canvas library\n\nby Chris Newland"),
-                new TextWaveSprite(demoConfig, new String[] {"Click to play"}, demoConfig.getHeight() * 0.75, demoConfig.getHeight() / 1000, Math.max(3, Math.min(5, demoConfig.getWidth() / 150)), true)
+                new TextWaveSprite(demoConfig, new String[] { OperatingSystem.isMobile() ? "Tap to play" : "Click to play"}, demoConfig.getHeight() * 0.75, demoConfig.getHeight() / 1000, Math.max(3, Math.min(5, demoConfig.getWidth() / 150)), true)
         ));
     }
 

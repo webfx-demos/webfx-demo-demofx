@@ -8,6 +8,7 @@ module webfx.demo.demofx.application {
     requires javafx.media;
     requires webfx.kit.util.scene;
     requires webfx.lib.demofx;
+    requires webfx.platform.os;
     requires webfx.platform.resource;
     requires webfx.platform.uischeduler;
     requires webfx.platform.util;
