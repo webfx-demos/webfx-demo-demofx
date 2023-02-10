@@ -100,6 +100,8 @@
                     </resourcesList>
                     <appIdentifier>dev.webfx.demo.demofx</appIdentifier>
                     <releaseConfiguration>
+                        <!-- macOS/iOS -->
+                        <bundleName>DemoFX</bundleName>
                         <!-- Android -->
                         <appLabel>DemoFX</appLabel>
                     </releaseConfiguration>

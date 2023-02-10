@@ -85,6 +85,8 @@
     <source path="dev/webfx/demo/demofx"/>
     <resource path="dev/webfx/demo/demofx"/>
     <public includes="dev/webfx/demo/demofx/" path=""/>
+    <!--==============================< webfx-extras-flexbox >==============================-->
+    <source path="dev/webfx/extras/flexbox"/>
     <!--=================================< webfx-kit-gwt >==================================-->
     <source path="dev/webfx/kit/launcher/spi/impl/gwt"/>
     <source path="dev/webfx/kit/mapper/spi/impl/gwt"/>

@@ -19,68 +19,134 @@ import com.chrisnewland.demofx.effect.spectral.Equaliser;
 import com.chrisnewland.demofx.effect.sprite.*;
 import com.chrisnewland.demofx.effect.text.*;
 import com.chrisnewland.demofx.util.ImageUtil;
+import dev.webfx.extras.flexbox.FlexBox;
 import dev.webfx.kit.util.scene.DeviceSceneUtil;
-import dev.webfx.platform.os.OperatingSystem;
+import dev.webfx.platform.audio.AudioService;
 import dev.webfx.platform.resource.Resource;
 import dev.webfx.platform.uischeduler.UiScheduler;
 import dev.webfx.platform.util.collection.Collections;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.Arrays;
 
 public class DemoFXApplication extends Application {
     private final StackPane root = new StackPane();
-    private final Scene scene;
-    private DemoFX introDemo, waitDemo, actualDemo;
+    private final Scene scene = DeviceSceneUtil.newScene(root, 800, 600);
+    private double SCALE_FACTOR;
+    private Font MENU_BUTTONS_FONT;
+    private Font EFFECT_BUTTONS_FONT;
+    private Insets BUTTON_PADDING;
+    private Color buttonColor = Color.PURPLE; // Initial node color
+    private FlexBox menuBox, effectsBox;
+    private DemoFX introDemo, waitDemo, effectDemo, animationDemo;
     private AbstractEffect lastEffect;
     private boolean started;
-    private final Image quaver =  loadDemoImage("quaver.png");
-    private final Image quaver2 =  loadDemoImage("quaver2.png");
+    private final Image quaver = loadDemoImage("quaver.png");
+    private final Image quaver2 = loadDemoImage("quaver2.png");
     private Image purpleQuaver;
     long t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, tend = 264000;
-
-    public DemoFXApplication() {
-        scene = DeviceSceneUtil.newScene(root, 800, 600);
-    }
+    private Pane effectsPane;
 
     @Override
     public void start(Stage stage) {
+        // Loading the Roboto font for demo buttons (this also ensures that the ♪ symbol will be correctly rendered)
+        Font.loadFont(Resource.toUrl("Roboto-Regular.ttf", DemoFXApplication.class), 18);
         stage.setTitle("DemoFX");
         stage.setScene(scene);
+        SCALE_FACTOR = Math.min(scene.getWidth(), scene.getHeight()) / 600;
+        MENU_BUTTONS_FONT = Font.font("Roboto", 32 * SCALE_FACTOR);
+        EFFECT_BUTTONS_FONT = Font.font("Roboto", 24 * SCALE_FACTOR);
+        BUTTON_PADDING = new Insets(5 * SCALE_FACTOR);
+        menuBox = new FlexBox(40, 40,
+                createMenuButton("Play effects", this::playEffects),
+                createMenuButton("Play animation", this::playAnimation)
+        );
         stage.show();
         runIntroDemo();
     }
 
     private void runIntroDemo() {
         introDemo = newIntroDemo();
-        root.getChildren().setAll(introDemo.getPane());
+        menuBox.setMaxHeight(scene.getHeight() / 3);
+        StackPane.setMargin(menuBox, new Insets(40 * SCALE_FACTOR));
+        root.getChildren().setAll(introDemo.getPane(), menuBox);
         introDemo.runDemo();
-        root.setCursor(Cursor.HAND);
         root.setOnMouseClicked(e -> {
-            if (!started) {
-                introDemo.stopDemo();
-                root.setCursor(Cursor.DEFAULT);
-                root.getChildren().setAll(waitDemo.getPane());
-                waitDemo.runDemo();
-                UiScheduler.scheduleInAnimationFrame(() -> {
-                    waitDemo.stopDemo();
-                    root.getChildren().setAll(actualDemo.getPane());
-                    actualDemo.runDemo();
-                }, 6);
-                started = true;
-            } else
-                actualDemo.stopDemo();
+            if (started)
+                animationDemo.stopDemo();
         });
         started = false;
         waitDemo = newWaitDemo();
-        actualDemo = newActualDemo();
+        animationDemo = newAnimationDemo();
+    }
+
+    private void playAnimation() {
+        introDemo.stopDemo();
+        root.setCursor(Cursor.DEFAULT);
+        root.getChildren().setAll(waitDemo.getPane());
+        waitDemo.runDemo();
+        UiScheduler.scheduleInAnimationFrame(() -> {
+            waitDemo.stopDemo();
+            root.getChildren().setAll(animationDemo.getPane());
+            animationDemo.runDemo();
+        }, 6);
+        started = true;
+    }
+
+    private void playEffects() {
+        if (effectsBox == null)
+            effectsBox = new FlexBox(10 * SCALE_FACTOR, 10 * SCALE_FACTOR, dev.webfx.platform.util.Arrays.nonNulls(Node[]::new,
+                    createEffectButton("Bobs", "bobs"),
+                    createEffectButton("Burst", "burst"),
+                    createEffectButton("Chord", "chord"),
+                    createEffectButton("Checkerboard", "checkerboard"),
+                    createEffectButton("Concentric", "concentric"),
+                    createEffectButton("Credits", "credits"),
+                    AudioService.supportsMusicSpectrumAnalysis() ? createEffectButton("Equaliser ♪", "equaliser", "https://cdn.pixabay.com/download/audio/2022/03/15/audio_8cb749d484.mp3?filename=happy-ukulele-fun-positive-comedy-glockenspiel-music-93694.mp3") : null,
+                    createEffectButton("Falling", "falling"),
+                    createEffectButton("Fractal rings", "fractalrings"),
+                    createEffectButton("Honeycomb", "honeycomb"),
+                    createEffectButton("Mandala", "mandala"),
+                    createEffectButton("Mandelbrot", "mandelbrot"),
+                    createEffectButton("Mask stack", "maskstack"),
+                    createEffectButton("Moire", "moire"),
+                    createEffectButton("Moire 2", "moire2"),
+                    //createDemoButton("Moremoire", "moremoire"), // too slow to start
+                    createEffectButton("Glow board", "glowboard"),
+                    createEffectButton("Grid", "grid"),
+                    //createDemoButton("Rainbow", "rainbow"), // Performance problem with PixelWrite.setPixels()
+                    createEffectButton("Rings", "rings"),
+                    createEffectButton("Sea", "sea"),
+                    createEffectButton("Sine lines", "sinelines"),
+                    createEffectButton("Spin", "spin"),
+                    createEffectButton("Stars", "stars"),
+                    createEffectButton("Sierpinski", "sierpinski"),
+                    createEffectButton("Snow field", "snowfieldsprite"),
+                    createEffectButton("Star field", "starfieldsprite"),
+                    createEffectButton("Text flash", "textflash"),
+                    createEffectButton("Text ring", "textring"),
+                    //createDemoButton("Text wave", "textwave"), // to slow to start
+                    createEffectButton("Text wave sprite", "textwavesprite"),
+                    createEffectButton("Tiles", "tiles"),
+                    createEffectButton("Twister", "twister"),
+                    createEffectButton("Word search", "wordsearch"),
+                    createEffectButton("Back", null)
+            ));
+        effectsBox.setOnMouseClicked(null);
+        StackPane.setMargin(effectsBox, new Insets(30 * SCALE_FACTOR));
+        effectsPane = setBackgroundColor(Color.BLACK, new Pane());
+        showEffectsBox();
     }
 
     private DemoConfig newDemoConfig(String audioResource) {
@@ -92,8 +158,8 @@ public class DemoFXApplication extends Application {
 
     private DemoFX newIntroDemo() {
         return new DemoFX(newDemoConfig(null), (IEffectFactory) demoConfig -> Collections.listOf(
-                new WordSearch(demoConfig, "Animation using DemoFX\n\nA JavaFX Canvas library\n\nby Chris Newland"),
-                new TextWaveSprite(demoConfig, new String[] { OperatingSystem.isMobile() ? "Tap to play" : "Click to play"}, demoConfig.getHeight() * 0.75, demoConfig.getHeight() / 1000, Math.max(3, Math.min(5, demoConfig.getWidth() / 150)), true)
+                new WordSearch(demoConfig, "\n\n\n\n\n\n\n\n\n\nPowered by DemoFX\n\nA JavaFX Canvas library\n\nby Chris Newland")
+                //new TextWaveSprite(demoConfig, new String[] { OperatingSystem.isMobile() ? "Tap to play" : "Click to play"}, demoConfig.getHeight() * 0.75, demoConfig.getHeight() / 1000, Math.max(3, Math.min(5, demoConfig.getWidth() / 150)), true)
         ));
     }
 
@@ -103,7 +169,7 @@ public class DemoFXApplication extends Application {
         ));
     }
 
-    private DemoFX newActualDemo() {
+    private DemoFX newAnimationDemo() {
         return new DemoFX(newDemoConfig("DemoFX3.mp3"), (IEffectFactory) demoConfig -> Collections.listOf(
                 // Starting sequence: Star field with majority white stars, then blue, purple & orange stars
                 new FadeOutAddOnEffect(scheduleEffect(new StarfieldSprite(demoConfig, Color.WHITE, Color.WHITE, Color.web("#0c53a9"), Color.web("#850ca6"), Color.web("#a25e11")), 0, (t1 = 15820) + 5000), 3000 /* 3s fadeout effect 2s after fractal rings starts */),
@@ -181,8 +247,80 @@ public class DemoFXApplication extends Application {
         return effect;
     }
 
+    private Node createButton(String text, boolean isEffectButton, Runnable runnable) {
+        Text buttonText = new Text(text);
+        buttonText.setFont(isEffectButton ? EFFECT_BUTTONS_FONT : MENU_BUTTONS_FONT);
+        buttonText.setFill(Color.WHITE);
+        StackPane.setMargin(buttonText, BUTTON_PADDING);
+        StackPane button = setBackgroundColor(buttonColor, new StackPane(buttonText));
+        // Rotating color for next node
+        buttonColor = buttonColor.deriveColor(20, 1d, 1d, 1d);
+        button.setOnMouseClicked(e -> {
+            runnable.run();
+            e.consume();
+        });
+        button.setCursor(Cursor.HAND);
+        return button;
+    }
+
+    private Node createMenuButton(String text, Runnable runnable) {
+        return createButton(text, false, runnable);
+    }
+
+    private Node createEffectButton(String text, String effect) {
+        return createEffectButton(text, effect, null);
+    }
+
+    private Node createEffectButton(String text, String effect, String audioUrl) {
+        return createButton(text, true, () -> {
+            if (effect != null)
+                runEffectDemo(effect, audioUrl);
+            else // Back button
+                exitEffects();
+        });
+    }
+
+    private boolean showEffectBox;
+
+    private void runEffectDemo(String effect, String audioUrl) {
+        if (effectDemo != null)
+            effectDemo.stopDemo();
+        DemoConfig config = audioUrl == null ? DemoConfig.buildConfig("-e", effect, "-w", "" + scene.getWidth(), "-h", "" + scene.getHeight()) : DemoConfig.buildConfig("-e", effect, "-a", audioUrl, "-w", "" + scene.getWidth(), "-h", "" + scene.getHeight());
+        effectDemo = new DemoFX(config);
+        effectsPane = effectDemo.getPane();
+        effectsPane.setOnMouseClicked(e -> toggleShowEffectsBox());
+        effectsPane.setCursor(Cursor.HAND);
+        effectsBox.setOnMouseClicked(e -> toggleShowEffectsBox());
+        effectsBox.setCursor(Cursor.HAND);
+        toggleShowEffectsBox(); // Will hide the effect buttons
+        effectDemo.runDemo();
+    }
+
+    private void updateEffectRootContent() {
+        if (showEffectBox)
+            root.getChildren().setAll(effectsPane, effectsBox);
+        else
+            root.getChildren().setAll(effectsPane);
+    }
+
+    private void showEffectsBox() {
+        showEffectBox = true;
+        updateEffectRootContent();
+    }
+
+    private void toggleShowEffectsBox() {
+        showEffectBox = !showEffectBox;
+        updateEffectRootContent();
+    }
+
+    private void exitEffects() {
+        if (effectDemo != null)
+            effectDemo.stopDemo();
+        runIntroDemo();
+    }
+
     private Image loadDemoImage(String name) {
-        return new Image("dev/webfx/demo/demofx/" + name, true);
+        return new Image(Resource.toUrl(name, DemoFXApplication.class), true);
     }
 
     private Image createTintedQuaver(Color color) {
@@ -198,4 +336,10 @@ public class DemoFXApplication extends Application {
         if (quaver.getProgress() == 1)
             ImageUtil.tintImage(quaver, color.getHue(), image);
     }
+
+    private static <R extends Region> R setBackgroundColor(Color color, R region) {
+        region.setBackground(new Background(new BackgroundFill(color, null, null)));
+        return region;
+    }
+
 }
