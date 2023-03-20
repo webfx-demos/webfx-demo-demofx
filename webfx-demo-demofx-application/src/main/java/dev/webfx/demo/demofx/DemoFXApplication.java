@@ -19,6 +19,9 @@ import com.chrisnewland.demofx.effect.spectral.Equaliser;
 import com.chrisnewland.demofx.effect.sprite.*;
 import com.chrisnewland.demofx.effect.text.*;
 import com.chrisnewland.demofx.util.ImageUtil;
+import dev.webfx.extras.util.background.BackgroundFactory;
+import dev.webfx.extras.util.color.ColorSeries;
+import dev.webfx.extras.util.color.Colors;
 import dev.webfx.extras.flexbox.FlexBox;
 import dev.webfx.kit.util.scene.DeviceSceneUtil;
 import dev.webfx.platform.audio.AudioService;
@@ -47,7 +50,7 @@ public class DemoFXApplication extends Application {
     private Font MENU_BUTTONS_FONT;
     private Font EFFECT_BUTTONS_FONT;
     private Insets BUTTON_PADDING;
-    private Color buttonColor = Color.PURPLE; // Initial node color
+    private final ColorSeries buttonColorSeries = Colors.createColorHueShiftSeries();
     private FlexBox menuBox, effectsBox;
     private DemoFX introDemo, waitDemo, effectDemo, animationDemo;
     private AbstractEffect lastEffect;
@@ -67,7 +70,7 @@ public class DemoFXApplication extends Application {
         SCALE_FACTOR = Math.min(scene.getWidth(), scene.getHeight()) / 600;
         MENU_BUTTONS_FONT = Font.font("Roboto", 32 * SCALE_FACTOR);
         EFFECT_BUTTONS_FONT = Font.font("Roboto", 24 * SCALE_FACTOR);
-        BUTTON_PADDING = new Insets(5 * SCALE_FACTOR);
+        BUTTON_PADDING = new Insets(10 * SCALE_FACTOR);
         menuBox = new FlexBox(40, 40,
                 createMenuButton("Play effects", this::playEffects),
                 createMenuButton("Play animation", this::playAnimation)
@@ -145,7 +148,8 @@ public class DemoFXApplication extends Application {
             ));
         effectsBox.setOnMouseClicked(null);
         StackPane.setMargin(effectsBox, new Insets(30 * SCALE_FACTOR));
-        effectsPane = setBackgroundColor(Color.BLACK, new Pane());
+        effectsPane = new Pane();
+        effectsPane.setBackground(BackgroundFactory.newBackground(Color.BLACK));
         showEffectsBox();
     }
 
@@ -252,9 +256,9 @@ public class DemoFXApplication extends Application {
         buttonText.setFont(isEffectButton ? EFFECT_BUTTONS_FONT : MENU_BUTTONS_FONT);
         buttonText.setFill(Color.WHITE);
         StackPane.setMargin(buttonText, BUTTON_PADDING);
-        StackPane button = setBackgroundColor(buttonColor, new StackPane(buttonText));
-        // Rotating color for next node
-        buttonColor = buttonColor.deriveColor(20, 1d, 1d, 1d);
+        StackPane button = new StackPane(buttonText);
+        button.setBackground(BackgroundFactory.newBackground(buttonColorSeries.nextColor()));
+
         button.setOnMouseClicked(e -> {
             runnable.run();
             e.consume();
@@ -335,11 +339,6 @@ public class DemoFXApplication extends Application {
     private void tintQuaver(Image quaver, WritableImage image, Color color) {
         if (quaver.getProgress() == 1)
             ImageUtil.tintImage(quaver, color.getHue(), image);
-    }
-
-    private static <R extends Region> R setBackgroundColor(Color color, R region) {
-        region.setBackground(new Background(new BackgroundFill(color, null, null)));
-        return region;
     }
 
 }

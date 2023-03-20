@@ -87,6 +87,12 @@
     <public includes="dev/webfx/demo/demofx/" path=""/>
     <!--==============================< webfx-extras-flexbox >==============================-->
     <source path="dev/webfx/extras/flexbox"/>
+    <!--==========================< webfx-extras-util-background >==========================-->
+    <source path="dev/webfx/extras/util/background"/>
+    <!--============================< webfx-extras-util-color >=============================-->
+    <source path="dev/webfx/extras/util/color"/>
+    <!--============================< webfx-extras-util-paint >=============================-->
+    <source path="dev/webfx/extras/util/paint"/>
     <!--=================================< webfx-kit-gwt >==================================-->
     <source path="dev/webfx/kit/launcher/spi/impl/gwt"/>
     <source path="dev/webfx/kit/mapper/spi/impl/gwt"/>

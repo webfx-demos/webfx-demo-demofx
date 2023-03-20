@@ -7,6 +7,8 @@ module webfx.demo.demofx.application {
     requires javafx.graphics;
     requires javafx.media;
     requires webfx.extras.flexbox;
+    requires webfx.extras.util.background;
+    requires webfx.extras.util.color;
     requires webfx.kit.util.scene;
     requires webfx.lib.demofx;
     requires webfx.platform.audio;
