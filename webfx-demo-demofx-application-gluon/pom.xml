@@ -96,7 +96,7 @@
                         <list>com/chrisnewland/demofx/text/[^/]+$</list>
                         <list>dev/webfx/demo/demofx/[^/]+$</list>
                         <list>dev/webfx/platform/meta/exe/[^/]+$</list>
-                        <list>images/checkbox/[^/]+$</list>
+                        <list>javafx/scene/control/skin/checkbox/[^/]+$</list>
                     </resourcesList>
                     <appIdentifier>dev.webfx.demo.demofx</appIdentifier>
                     <releaseConfiguration>
