@@ -14,7 +14,4 @@ module webfx.demo.demofx.application.openjfx {
     requires webfx.platform.scheduler.java;
     requires webfx.platform.shutdown.java;
 
-    // Resources packages
-    opens dev.webfx.platform.meta.exe;
-
 }
