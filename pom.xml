@@ -36,6 +36,7 @@
         <module>webfx-demo-demofx-application</module>
         <module>webfx-demo-demofx-application-gluon</module>
         <module>webfx-demo-demofx-application-gwt</module>
+        <module>webfx-demo-demofx-application-j2cl</module>
         <module>webfx-demo-demofx-application-openjfx</module>
     </modules>
 

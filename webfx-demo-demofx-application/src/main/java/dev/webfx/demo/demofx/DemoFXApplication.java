@@ -22,7 +22,7 @@ import com.chrisnewland.demofx.util.ImageUtil;
 import dev.webfx.extras.util.background.BackgroundFactory;
 import dev.webfx.extras.util.color.ColorSeries;
 import dev.webfx.extras.util.color.Colors;
-import dev.webfx.extras.flexbox.FlexBox;
+import dev.webfx.extras.panes.FlexPane;
 import dev.webfx.kit.util.scene.DeviceSceneUtil;
 import dev.webfx.platform.audio.AudioService;
 import dev.webfx.platform.resource.Resource;
@@ -51,7 +51,7 @@ public class DemoFXApplication extends Application {
     private Font EFFECT_BUTTONS_FONT;
     private Insets BUTTON_PADDING;
     private final ColorSeries buttonColorSeries = Colors.createColorHueShiftSeries();
-    private FlexBox menuBox, effectsBox;
+    private FlexPane menuBox, effectsBox;
     private DemoFX introDemo, waitDemo, effectDemo, animationDemo;
     private AbstractEffect lastEffect;
     private boolean started;
@@ -71,7 +71,7 @@ public class DemoFXApplication extends Application {
         MENU_BUTTONS_FONT = Font.font("Roboto", 32 * SCALE_FACTOR);
         EFFECT_BUTTONS_FONT = Font.font("Roboto", 24 * SCALE_FACTOR);
         BUTTON_PADDING = new Insets(10 * SCALE_FACTOR);
-        menuBox = new FlexBox(40, 40,
+        menuBox = new FlexPane(40, 40,
                 createMenuButton("Play effects", this::playEffects),
                 createMenuButton("Play animation", this::playAnimation)
         );
@@ -109,7 +109,7 @@ public class DemoFXApplication extends Application {
 
     private void playEffects() {
         if (effectsBox == null)
-            effectsBox = new FlexBox(10 * SCALE_FACTOR, 10 * SCALE_FACTOR, dev.webfx.platform.util.Arrays.nonNulls(Node[]::new,
+            effectsBox = new FlexPane(10 * SCALE_FACTOR, 10 * SCALE_FACTOR, dev.webfx.platform.util.Arrays.nonNulls(Node[]::new,
                     createEffectButton("Bobs", "bobs"),
                     createEffectButton("Burst", "burst"),
                     createEffectButton("Chord", "chord"),

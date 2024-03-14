@@ -6,7 +6,7 @@ module webfx.demo.demofx.application {
     requires java.base;
     requires javafx.graphics;
     requires javafx.media;
-    requires webfx.extras.flexbox;
+    requires webfx.extras.panes;
     requires webfx.extras.util.background;
     requires webfx.extras.util.color;
     requires webfx.kit.util.scene;
