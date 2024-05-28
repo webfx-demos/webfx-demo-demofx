@@ -111,7 +111,6 @@
                         <!-- Android -->
                         <appLabel>DemoFX</appLabel>
                     </releaseConfiguration>
-
                 </configuration>
             </plugin>
         </plugins>
