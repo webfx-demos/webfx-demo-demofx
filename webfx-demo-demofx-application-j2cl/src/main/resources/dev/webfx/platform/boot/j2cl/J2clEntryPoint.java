@@ -23,6 +23,7 @@ public final class J2clEntryPoint implements ApplicationBooterProvider {
     }
 
     private static void registerServiceProviders() {
+        register(dev.webfx.extras.fastpixelreaderwriter.spi.FastPixelReaderWriterProvider.class, dev.webfx.extras.fastpixelreaderwriter.spi.impl.elemental2.Elemental2FastPixelReaderWriterProvider::new);
         register(dev.webfx.kit.launcher.spi.WebFxKitLauncherProvider.class, dev.webfx.kit.launcher.spi.impl.elemental2.Elemental2WebFxKitLauncherProvider::new);
         register(dev.webfx.kit.mapper.peers.javafxmedia.spi.WebFxKitMediaMapperProvider.class, dev.webfx.kit.mapper.peers.javafxmedia.spi.elemental2.Elemental2WebFxKitMediaMapperProvider::new);
         register(dev.webfx.kit.mapper.spi.WebFxKitMapperProvider.class, dev.webfx.kit.mapper.spi.impl.elemental2.Elemental2WebFxKitHtmlMapperProvider::new);

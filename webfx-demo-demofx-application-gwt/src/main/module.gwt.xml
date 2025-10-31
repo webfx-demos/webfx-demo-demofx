@@ -89,6 +89,11 @@
     <source path="dev/webfx/demo/demofx"/>
     <resource path="dev/webfx/demo/demofx"/>
     <public path="" includes="dev/webfx/demo/demofx/"/>
+    <!--=======================< webfx-extras-fastpixelreaderwriter >=======================-->
+    <source path="dev/webfx/extras/fastpixelreaderwriter"/>
+    <source path="dev/webfx/extras/fastpixelreaderwriter/spi"/>
+    <!--=================< webfx-extras-fastpixelreaderwriter-elemental2 >==================-->
+    <source path="dev/webfx/extras/fastpixelreaderwriter/spi/impl/elemental2"/>
     <!--===============================< webfx-extras-panes >===============================-->
     <source path="dev/webfx/extras/panes"/>
     <source path="dev/webfx/extras/panes/transitions"/>
