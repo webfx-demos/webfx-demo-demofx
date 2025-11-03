@@ -162,7 +162,7 @@ jobs:
       # Building TeaVM application (if required)
       - if: matrix.teavm-artifact-suffix != null || matrix.app.teavm-push-branch != null && matrix.os-config == 1  || matrix.app.teavm-wasm-push-branch != null && matrix.os-config == 1
         name: Build TeaVM application
-        run: ${{ matrix.MVN }} -B -Pteavm,teavm-dev,teavm-sourcemaps package
+        run: ${{ matrix.MVN }} -B -Pteavm,production package
         working-directory: ${{ env.app-parent-module-dir }}
 
       # Building OpenJFX fat jar and installers (if required)
